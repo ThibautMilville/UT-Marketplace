@@ -68,59 +68,122 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
   };
 
   const handleLanguageChange = (lang: 'en' | 'fr' | 'de') => {
-    setCurrentLang(lang);
-    setIsLangMenuOpen(false);
+    console.log('handleLanguageChange called with:', lang);
+    console.log('Current language before change:', currentLang);
     
-    // Mettre à jour l'URL avec la nouvelle langue
-    const currentPath = window.location.pathname;
-    const pathWithoutLang = currentPath.replace(/^\/(en|fr|de)/, '') || '/';
-    const newPath = `/${lang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
-    window.history.pushState({}, '', newPath);
+    try {
+      // Fermer le menu
+      setIsLangMenuOpen(false);
+      
+      // Changer la langue dans le contexte
+      setCurrentLang(lang);
+      
+      // Mettre à jour l'URL avec la nouvelle langue
+      const currentPath = window.location.pathname;
+      console.log('Current path:', currentPath);
+      
+      const pathWithoutLang = currentPath.replace(/^\/(en|fr|de)/, '') || '/';
+      console.log('Path without lang:', pathWithoutLang);
+      
+      const newPath = `/${lang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+      console.log('New path:', newPath);
+      
+      // Utiliser replaceState au lieu de pushState pour éviter l'historique
+      window.history.replaceState({}, '', newPath);
+      
+      console.log('Language change completed');
+    } catch (error) {
+      console.error('Error in handleLanguageChange:', error);
+    }
   };
 
   const getCurrentFlag = () => {
     const flags = {
-      en: '🇺🇸',
-      fr: '🇫🇷',
-      de: '🇩🇪'
+      en: (
+        <svg className='w-6 h-4' viewBox='0 0 36 24'>
+          <rect width='36' height='24' fill='#012169' />
+          <path d='M0,0 L36,24 M36,0 L0,24' stroke='#fff' strokeWidth='2.4' />
+          <path d='M18,0 L18,24 M0,12 L36,12' stroke='#fff' strokeWidth='4' />
+          <path d='M18,0 L18,24 M0,12 L36,12' stroke='#C8102E' strokeWidth='2.4' />
+        </svg>
+      ),
+      fr: (
+        <svg className='w-6 h-4' viewBox='0 0 36 24'>
+          <rect width='36' height='24' fill='#ED2939' />
+          <rect width='12' height='24' fill='#002395' />
+          <rect x='12' width='12' height='24' fill='#fff' />
+        </svg>
+      ),
+      de: (
+        <svg className='w-6 h-4' viewBox='0 0 36 24'>
+          <rect width='36' height='8' fill='#000' />
+          <rect y='8' width='36' height='8' fill='#DD0000' />
+          <rect y='16' width='36' height='8' fill='#FFCE00' />
+        </svg>
+      ),
     };
-    return <span className="text-lg">{flags[currentLang]}</span>;
+    return flags[currentLang];
   };
 
   const getBreadcrumb = () => {
+    const breadcrumbClass = "flex items-center space-x-2 text-sm bg-black/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-[#7A52D1]/20";
+    const linkClass = "hover:text-[#7A52D1] transition-colors duration-200 font-medium";
+    const currentClass = "text-[#7A52D1] font-bold";
+    const separatorClass = "text-gray-600";
+
     switch (currentPage) {
       case 'uniq-detail':
         return (
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">{t('nav.home')}</button>
-            <ChevronRight className="w-4 h-4" />
-            <button onClick={() => onNavigate('home')} className="hover:text-white">{t('nav.collections')}</button>
-            <ChevronRight className="w-4 h-4" />
-            <span className="hover:text-white">Ultra's Power Collection</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="hover:text-white">Ultra Power</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-white">Uniq 38</span>
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <button onClick={() => onNavigate('collections')} className={linkClass}>Collections</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <button onClick={() => onNavigate('collection-detail')} className={linkClass}>Ultra Genesis</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>NFT #3847</span>
+          </div>
+        );
+      case 'collection-detail':
+        return (
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <button onClick={() => onNavigate('collections')} className={linkClass}>Collections</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>Collection</span>
           </div>
         );
       case 'transactions':
         return (
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">{t('nav.home')}</button>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-white">{t('nav.transactions')}</span>
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>Transactions</span>
           </div>
         );
       case 'marketplace':
         return (
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">{t('nav.home')}</button>
-            <ChevronRight className="w-4 h-4" />
-            <button onClick={() => onNavigate('home')} className="hover:text-white">{t('nav.collections')}</button>
-            <ChevronRight className="w-4 h-4" />
-            <span className="hover:text-white">Ultra's Power Collection</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-white">{t('nav.marketplace')}</span>
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>Marketplace</span>
+          </div>
+        );
+      case 'collections':
+        return (
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>Collections</span>
+          </div>
+        );
+      case 'statistics':
+        return (
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>Statistiques</span>
           </div>
         );
       default:
@@ -129,7 +192,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
   };
 
   return (
-    <header className="bg-black/90 backdrop-blur-sm border-b border-purple-500/20 sticky top-0 z-50">
+    <header className="bg-black/90 backdrop-blur-sm border-b border-[#7A52D1]/20 sticky top-0 z-50">
       <div className="w-full px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-16 w-full">
           <div className="flex items-center">
@@ -148,63 +211,80 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
           <nav className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2">
             <button 
               onClick={() => onNavigate('home')} 
-              className={`relative text-sm font-medium transition-all duration-200 pb-1 ${
+              className={`relative text-base font-bold transition-all duration-200 pb-1 border-b-2 ${
                 currentPage === 'home' 
-                  ? 'text-purple-400 border-b-2 border-purple-400' 
-                  : 'text-gray-300 hover:text-white hover:border-b-2 hover:border-purple-400'
+                  ? 'text-[#7A52D1] border-[#7A52D1]' 
+                  : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
               ACCUEIL
             </button>
             <button 
               onClick={() => onNavigate('marketplace')} 
-              className={`relative text-sm font-medium transition-all duration-200 pb-1 ${
+              className={`relative text-base font-bold transition-all duration-200 pb-1 border-b-2 ${
                 currentPage === 'marketplace' 
-                  ? 'text-purple-400 border-b-2 border-purple-400' 
-                  : 'text-gray-300 hover:text-white hover:border-b-2 hover:border-purple-400'
+                  ? 'text-[#7A52D1] border-[#7A52D1]' 
+                  : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
               MARKETPLACE
             </button>
             <button 
-              onClick={() => onNavigate('transactions')} 
-              className={`relative text-sm font-medium transition-all duration-200 pb-1 ${
-                currentPage === 'transactions' 
-                  ? 'text-purple-400 border-b-2 border-purple-400' 
-                  : 'text-gray-300 hover:text-white hover:border-b-2 hover:border-purple-400'
+              onClick={() => onNavigate('collections')} 
+              className={`relative text-base font-bold transition-all duration-200 pb-1 border-b-2 ${
+                currentPage === 'collections' 
+                  ? 'text-[#7A52D1] border-[#7A52D1]' 
+                  : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              TRANSACTION
+              COLLECTIONS
             </button>
-            <a 
-              href="#collections" 
-              className="relative text-sm font-medium text-gray-300 hover:text-white hover:border-b-2 hover:border-purple-400 transition-all duration-200 pb-1"
+            <button 
+              onClick={() => onNavigate('transactions')} 
+              className={`relative text-base font-bold transition-all duration-200 pb-1 border-b-2 ${
+                currentPage === 'transactions' 
+                  ? 'text-[#7A52D1] border-[#7A52D1]' 
+                  : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
+              }`}
             >
-              COLLECTION
-            </a>
-            <a 
-              href="#stats" 
-              className="relative text-sm font-medium text-gray-300 hover:text-white hover:border-b-2 hover:border-purple-400 transition-all duration-200 pb-1"
+              TRANSACTIONS
+            </button>
+            <button 
+              onClick={() => onNavigate('statistics')} 
+              className={`relative text-base font-bold transition-all duration-200 pb-1 border-b-2 ${
+                currentPage === 'statistics' 
+                  ? 'text-[#7A52D1] border-[#7A52D1]' 
+                  : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
+              }`}
             >
-              STATISTIQUE
-            </a>
+              STATISTIQUES
+            </button>
           </nav>
 
           <div className="flex items-center space-x-3">
-            <button className="hidden lg:flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-4 py-2 rounded-full transition-all duration-200 text-sm font-medium border border-purple-500/50 shadow-lg shadow-purple-500/25">
-              <span className="text-sm">⏰</span>
+            <a 
+              href="https://ultratimes.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:flex items-center space-x-1.5 bg-transparent hover:bg-white/10 text-white px-3 py-2 rounded-full transition-all duration-200 text-sm font-bold border-2 border-white/60 shadow-lg"
+            >
+              <img 
+                src="/logo_UT_icon-2.png" 
+                alt="Ultra Times Icon" 
+                className="w-3.5 h-3.5 object-contain"
+              />
               <span>ULTRA TIMES</span>
               <ExternalLink className="w-3 h-3" />
-            </button>
+            </a>
 
             {isConnected ? (
               <div className="relative" ref={profileDropdownRef}>
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-4 py-2 rounded-full transition-all duration-200 text-sm font-medium border border-green-500/50 shadow-lg shadow-green-500/25"
+                  className="flex items-center space-x-1.5 bg-[#7A52D1] hover:bg-[#6A42C1] text-white px-3 py-2 rounded-full transition-all duration-200 text-sm font-bold border-2 border-[#7A52D1]/60 shadow-lg shadow-[#7A52D1]/25"
                   disabled={isLoading}
                 >
-                  <Wallet className="w-4 h-4" />
+                  <Wallet className="w-3.5 h-3.5" />
                   <span className="hidden lg:block">
                     {blockchainId ? `${blockchainId.slice(0, 6)}...${blockchainId.slice(-4)}` : 'CONNECTÉ'}
                   </span>
@@ -232,25 +312,77 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
             ) : (
               <button 
                 onClick={handleConnect}
-                className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-full transition-all duration-200 text-sm font-medium border border-blue-500/50 shadow-lg shadow-blue-500/25 disabled:opacity-50"
+                className="flex items-center space-x-1.5 bg-[#7A52D1] hover:bg-[#6A42C1] text-white px-3 py-2 rounded-full transition-all duration-200 text-sm font-bold border-2 border-[#7A52D1]/60 shadow-lg shadow-[#7A52D1]/25 disabled:opacity-50"
                 disabled={isLoading}
               >
-                <Wallet className="w-4 h-4" />
+                <Wallet className="w-3.5 h-3.5" />
                 <span className="hidden lg:block">
                   {isLoading ? 'CONNEXION...' : 'WALLET'}
                 </span>
               </button>
             )}
 
-            <div className="bg-gradient-to-r from-gray-700 to-gray-800 border border-gray-600/50 rounded-full shadow-lg shadow-gray-500/10">
-              <LanguageSelector
-                isOpen={isLangMenuOpen}
-                setIsOpen={setIsLangMenuOpen}
-                currentLang={currentLang}
-                handleLanguageChange={handleLanguageChange}
-                getCurrentFlag={getCurrentFlag}
-                langMenuRef={langMenuRef}
-              />
+            <div className="relative">
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  console.log('Language button clicked, current isLangMenuOpen:', isLangMenuOpen)
+                  setIsLangMenuOpen(!isLangMenuOpen)
+                }}
+                className="flex items-center space-x-1.5 bg-transparent hover:bg-white/10 text-white px-3 py-2 rounded-full transition-all duration-200 text-sm font-bold border-2 border-white/60 shadow-lg"
+                ref={langMenuRef}
+              >
+                {getCurrentFlag()}
+                <span>{currentLang.toUpperCase()}</span>
+                <span className="text-xs">▼</span>
+              </button>
+              
+              {isLangMenuOpen && (
+                <div className="absolute right-0 mt-2 w-28 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50 z-50">
+                  {['en', 'fr', 'de'].map(lang => (
+                    <button
+                      key={lang}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        console.log('Language selected:', lang)
+                        console.log('Current language:', currentLang)
+                        handleLanguageChange(lang as 'en' | 'fr' | 'de')
+                      }}
+                      className={`w-full px-3 py-2 text-left text-sm transition-colors rounded-lg flex items-center space-x-2 ${
+                        currentLang === lang 
+                          ? 'bg-[#7A52D1]/20 text-[#7A52D1]' 
+                          : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                      }`}
+                    >
+                      <div className="flex-shrink-0">
+                        {lang === 'en' ? (
+                          <svg className='w-5 h-3' viewBox='0 0 36 24'>
+                            <rect width='36' height='24' fill='#012169' />
+                            <path d='M0,0 L36,24 M36,0 L0,24' stroke='#fff' strokeWidth='2.4' />
+                            <path d='M18,0 L18,24 M0,12 L36,12' stroke='#fff' strokeWidth='4' />
+                            <path d='M18,0 L18,24 M0,12 L36,12' stroke='#C8102E' strokeWidth='2.4' />
+                          </svg>
+                        ) : lang === 'fr' ? (
+                          <svg className='w-5 h-3' viewBox='0 0 36 24'>
+                            <rect width='36' height='24' fill='#ED2939' />
+                            <rect width='12' height='24' fill='#002395' />
+                            <rect x='12' width='12' height='24' fill='#fff' />
+                          </svg>
+                        ) : (
+                          <svg className='w-5 h-3' viewBox='0 0 36 24'>
+                            <rect width='36' height='8' fill='#000' />
+                            <rect y='8' width='36' height='8' fill='#DD0000' />
+                            <rect y='16' width='36' height='8' fill='#FFCE00' />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-xs font-medium">{lang.toUpperCase()}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button
@@ -263,43 +395,53 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-purple-500/20 py-4 bg-black/95 backdrop-blur-sm">
+          <div className="lg:hidden border-t border-[#7A52D1]/20 py-4 bg-black/95 backdrop-blur-sm">
             <nav className="flex flex-col space-y-4">
               <button 
                 onClick={() => { onNavigate('home'); setIsMenuOpen(false); }} 
-                className={`text-left transition-colors font-medium ${
-                  currentPage === 'home' ? 'text-purple-400' : 'text-gray-300 hover:text-white'
+                className={`text-left transition-colors font-bold text-base ${
+                  currentPage === 'home' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 ACCUEIL
               </button>
               <button 
                 onClick={() => { onNavigate('marketplace'); setIsMenuOpen(false); }} 
-                className={`text-left transition-colors font-medium ${
-                  currentPage === 'marketplace' ? 'text-purple-400' : 'text-gray-300 hover:text-white'
+                className={`text-left transition-colors font-bold text-base ${
+                  currentPage === 'marketplace' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 MARKETPLACE
               </button>
               <button 
-                onClick={() => { onNavigate('transactions'); setIsMenuOpen(false); }} 
-                className={`text-left transition-colors font-medium ${
-                  currentPage === 'transactions' ? 'text-purple-400' : 'text-gray-300 hover:text-white'
+                onClick={() => { onNavigate('collections'); setIsMenuOpen(false); }} 
+                className={`text-left transition-colors font-bold text-base ${
+                  currentPage === 'collections' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                TRANSACTION
+                COLLECTIONS
               </button>
-              <a href="#collections" className="text-gray-300 hover:text-white transition-colors font-medium">
-                COLLECTION
-              </a>
-              <a href="#stats" className="text-gray-300 hover:text-white transition-colors font-medium">
-                STATISTIQUE
-              </a>
+              <button 
+                onClick={() => { onNavigate('transactions'); setIsMenuOpen(false); }} 
+                className={`text-left transition-colors font-bold text-base ${
+                  currentPage === 'transactions' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                TRANSACTIONS
+              </button>
+              <button 
+                onClick={() => { onNavigate('statistics'); setIsMenuOpen(false); }} 
+                className={`text-left transition-colors font-bold text-base ${
+                  currentPage === 'statistics' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                STATISTIQUES
+              </button>
               
               {!isConnected && (
                 <button 
                   onClick={handleConnect}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-full transition-all duration-200 w-fit text-sm font-medium border border-blue-500/50 shadow-lg shadow-blue-500/25 disabled:opacity-50"
+                  className="flex items-center space-x-2 bg-[#7A52D1] hover:bg-[#6A42C1] text-white px-4 py-2.5 rounded-full transition-all duration-200 w-fit text-base font-bold border-2 border-[#7A52D1]/60 shadow-lg shadow-[#7A52D1]/25 disabled:opacity-50"
                   disabled={isLoading}
                 >
                   <Wallet className="w-4 h-4" />
@@ -311,7 +453,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
         )}
         
         {currentPage !== 'home' && (
-          <div className="py-3 border-t border-purple-500/10">
+          <div className="py-3 border-t border-[#7A52D1]/10">
             {getBreadcrumb()}
           </div>
         )}

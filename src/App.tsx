@@ -11,11 +11,15 @@ import Footer from './components/Footer';
 import UniqDetailPage from './pages/UniqDetailPage';
 import TransactionsPage from './pages/TransactionsPage';
 import MarketplacePage from './pages/MarketplacePage';
+import Collections from './components/pages/Collections';
+import Statistics from './components/pages/Statistics';
+import CollectionDetailPage from './components/pages/CollectionDetailPage';
 import { useTranslation } from './contexts/TranslationContext';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedUniq, setSelectedUniq] = useState(null);
+  const [selectedCollection, setSelectedCollection] = useState(null);
   const { currentLang, setCurrentLang } = useTranslation();
 
   // Gestion de la navigation avec support multilingue
@@ -75,7 +79,11 @@ function App() {
     window.history.pushState({}, '', newPath);
     
     if (data) {
-      setSelectedUniq(data);
+      if (page === 'collection-detail') {
+        setSelectedCollection(data);
+      } else {
+        setSelectedUniq(data);
+      }
     }
   };
 
@@ -87,16 +95,22 @@ function App() {
         return <TransactionsPage onNavigate={navigateToPage} />;
       case 'marketplace':
         return <MarketplacePage onNavigate={navigateToPage} />;
+      case 'collections':
+        return <Collections onNavigate={navigateToPage} />;
+      case 'statistics':
+        return <Statistics onNavigate={navigateToPage} />;
+      case 'collection-detail':
+        return <CollectionDetailPage collectionData={selectedCollection} onNavigate={navigateToPage} />;
       default:
         return (
           <>
-            <HeroSection />
-            <CollectionsSection />
+            <HeroSection onNavigate={navigateToPage} />
+            <CollectionsSection onNavigate={navigateToPage} />
             <MarketplaceSection onNavigate={navigateToPage} />
-            <TrendingSection />
+            <TrendingSection onNavigate={navigateToPage} />
             <TransactionsSection />
             <StatisticsSection />
-            <AboutSection />
+            <AboutSection onNavigate={navigateToPage} />
           </>
         );
     }

@@ -27,10 +27,14 @@ const getBrowserLanguage = (): Language => {
 export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentLang, setCurrentLang] = useState<Language>(() => {
     const savedLang = localStorage.getItem('language') as Language
-    return savedLang || getBrowserLanguage()
+    console.log('TranslationProvider init - savedLang:', savedLang)
+    const initialLang = savedLang || getBrowserLanguage()
+    console.log('TranslationProvider init - initialLang:', initialLang)
+    return initialLang
   })
 
   useEffect(() => {
+    console.log('TranslationProvider - saving language to localStorage:', currentLang)
     localStorage.setItem('language', currentLang)
   }, [currentLang])
 
@@ -38,7 +42,9 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
   useEffect(() => {
     const handleLocationChange = () => {
       const urlLang = window.location.pathname.split('/')[1];
+      console.log('TranslationProvider - handleLocationChange - urlLang:', urlLang, 'currentLang:', currentLang)
       if ((urlLang === 'fr' || urlLang === 'en' || urlLang === 'de') && urlLang !== currentLang) {
+        console.log('TranslationProvider - changing language from', currentLang, 'to', urlLang)
         setCurrentLang(urlLang as Language);
       }
     };
