@@ -30,9 +30,6 @@ function App() {
     // Vérifier si le premier segment est une langue
     if (segments.length > 0 && ['en', 'fr', 'de'].includes(segments[0])) {
       const lang = segments[0] as 'en' | 'fr' | 'de';
-      if (lang !== currentLang) {
-        setCurrentLang(lang);
-      }
       
       // Déterminer la page actuelle après la langue
       if (segments.length > 1) {
@@ -44,10 +41,11 @@ function App() {
       // Si pas de langue dans l'URL, rediriger avec la langue actuelle
       const newPath = `/${currentLang}${path === '/' ? '' : path}`;
       window.history.replaceState({}, '', newPath);
+      setCurrentPage('home');
     }
-  }, [currentLang, setCurrentLang]);
+  }, [currentLang]); // Retirer setCurrentLang des dépendances
 
-  // Écouter les changements d'URL pour la navigation
+  // Écouter les changements d'URL pour la navigation (navigation arrière/avant)
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;

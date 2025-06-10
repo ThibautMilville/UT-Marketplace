@@ -181,21 +181,31 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
               </button>
             </div>
 
-            {/* Indicateurs de slides */}
-            <div className={`flex items-center justify-center space-x-3 transition-all duration-1000 delay-1000 ${
+            {/* Indicateurs de slides et scroll indicator alignés */}
+            <div className={`flex flex-col items-center justify-center space-y-8 transition-all duration-1000 delay-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}>
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentSlide 
-                      ? 'bg-[#7A52D1] scale-125 shadow-lg shadow-[#7A52D1]/50' 
-                      : 'bg-white/40 hover:bg-white/60 shadow-md'
-                  }`}
-                ></button>
-              ))}
+              {/* Points de défilement */}
+              <div className="flex items-center justify-center space-x-3">
+                {heroSlides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide 
+                        ? 'bg-[#7A52D1] scale-125 shadow-lg shadow-[#7A52D1]/50' 
+                        : 'bg-white/40 hover:bg-white/60 shadow-md'
+                    }`}
+                  ></button>
+                ))}
+              </div>
+              
+              {/* Scroll indicator aligné */}
+              <div className="animate-bounce">
+                <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center shadow-lg">
+                  <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -210,13 +220,6 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
       </div>
       <div className="absolute bottom-32 left-40 w-28 h-28 opacity-10 rotate-45 animate-pulse" style={{animationDelay: '3s'}}>
         <div className="w-full h-full bg-gradient-to-br from-blue-400 to-violet-400 rounded-2xl blur-sm"></div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center shadow-lg">
-          <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
-        </div>
       </div>
     </section>
   );

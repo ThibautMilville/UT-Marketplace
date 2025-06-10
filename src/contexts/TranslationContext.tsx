@@ -38,27 +38,15 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
     localStorage.setItem('language', currentLang)
   }, [currentLang])
 
-  // Écouter les changements d'URL pour mettre à jour la langue
+  // Synchroniser avec l'URL au chargement initial seulement
   useEffect(() => {
-    const handleLocationChange = () => {
-      const urlLang = window.location.pathname.split('/')[1];
-      console.log('TranslationProvider - handleLocationChange - urlLang:', urlLang, 'currentLang:', currentLang)
-      if ((urlLang === 'fr' || urlLang === 'en' || urlLang === 'de') && urlLang !== currentLang) {
-        console.log('TranslationProvider - changing language from', currentLang, 'to', urlLang)
-        setCurrentLang(urlLang as Language);
-      }
-    };
-
-    // Écouter les changements de navigation
-    window.addEventListener('popstate', handleLocationChange);
-    
-    // Vérifier immédiatement
-    handleLocationChange();
-
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-    };
-  }, [currentLang])
+    const urlLang = window.location.pathname.split('/')[1];
+    console.log('TranslationProvider - initial URL check - urlLang:', urlLang, 'currentLang:', currentLang)
+    if ((urlLang === 'fr' || urlLang === 'en' || urlLang === 'de') && urlLang !== currentLang) {
+      console.log('TranslationProvider - initial language sync from', currentLang, 'to', urlLang)
+      setCurrentLang(urlLang as Language);
+    }
+  }, []) // Seulement au montage initial
 
   const t = (key: TranslationKey, params?: Record<string, any>): string => {
     const translation = translations[currentLang][key]

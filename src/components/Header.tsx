@@ -2,7 +2,6 @@ import React from 'react';
 import { Wallet, Menu, X, ChevronRight, ExternalLink } from 'lucide-react';
 import { useUltraWallet } from '../hooks/useUltraWallet';
 import { useTranslation } from '../contexts/TranslationContext';
-import LanguageSelector from './layout/LanguageSelector';
 import { useState, useEffect, useRef } from 'react';
 
 interface HeaderProps {
@@ -56,6 +55,11 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
     }
   }, [error, userInitiated]);
 
+  // Debug pour le menu de langue
+  useEffect(() => {
+    console.log('isLangMenuOpen changed to:', isLangMenuOpen);
+  }, [isLangMenuOpen]);
+
   const handleConnect = async () => {
     setUserInitiated(true);
     await connect();
@@ -71,25 +75,36 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
     console.log('handleLanguageChange called with:', lang);
     console.log('Current language before change:', currentLang);
     
+    if (lang === currentLang) {
+      console.log('Same language selected, closing menu');
+      setIsLangMenuOpen(false);
+      return;
+    }
+    
     try {
+      console.log('Starting language change process...');
+      
       // Fermer le menu
       setIsLangMenuOpen(false);
-      
-      // Changer la langue dans le contexte
-      setCurrentLang(lang);
+      console.log('Menu closed');
       
       // Mettre à jour l'URL avec la nouvelle langue
       const currentPath = window.location.pathname;
       console.log('Current path:', currentPath);
       
-      const pathWithoutLang = currentPath.replace(/^\/(en|fr|de)/, '') || '/';
+      const pathWithoutLang = currentPath.replace(/^\/(en|fr|de)/, '') || '';
       console.log('Path without lang:', pathWithoutLang);
       
-      const newPath = `/${lang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+      const newPath = `/${lang}${pathWithoutLang}`;
       console.log('New path:', newPath);
       
-      // Utiliser replaceState au lieu de pushState pour éviter l'historique
-      window.history.replaceState({}, '', newPath);
+      // Utiliser pushState pour permettre la navigation
+      window.history.pushState({}, '', newPath);
+      console.log('URL updated');
+      
+      // Changer la langue dans le contexte
+      console.log('Calling setCurrentLang with:', lang);
+      setCurrentLang(lang);
       
       console.log('Language change completed');
     } catch (error) {
@@ -217,7 +232,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              ACCUEIL
+              {t('nav.home').toUpperCase()}
             </button>
             <button 
               onClick={() => onNavigate('marketplace')} 
@@ -227,7 +242,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              MARKETPLACE
+              {t('nav.marketplace').toUpperCase()}
             </button>
             <button 
               onClick={() => onNavigate('collections')} 
@@ -237,7 +252,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              COLLECTIONS
+              {t('nav.collections').toUpperCase()}
             </button>
             <button 
               onClick={() => onNavigate('transactions')} 
@@ -247,7 +262,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              TRANSACTIONS
+              {t('nav.transactions').toUpperCase()}
             </button>
             <button 
               onClick={() => onNavigate('statistics')} 
@@ -257,7 +272,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   : 'text-gray-300 hover:text-white border-transparent hover:border-[#7A52D1]'
               }`}
             >
-              STATISTIQUES
+              {t('nav.statistics').toUpperCase()}
             </button>
           </nav>
 
@@ -286,7 +301,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                 >
                   <Wallet className="w-3.5 h-3.5" />
                   <span className="hidden lg:block">
-                    {blockchainId ? `${blockchainId.slice(0, 6)}...${blockchainId.slice(-4)}` : 'CONNECTÉ'}
+                    {blockchainId ? `${blockchainId.slice(0, 6)}...${blockchainId.slice(-4)}` : t('wallet.connected').toUpperCase()}
                   </span>
                   <span className="text-xs">▼</span>
                 </button>
@@ -294,7 +309,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50">
                     <div className="px-4 py-2 border-b border-gray-700/50">
-                      <p className="text-xs text-gray-400">Connecté à</p>
+                      <p className="text-xs text-gray-400">{t('wallet.connectedTo')}</p>
                       <p className="text-sm text-white truncate">
                         {blockchainId}
                       </p>
@@ -304,7 +319,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                       className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800/50 transition-colors"
                       disabled={isLoading}
                     >
-                      {isLoading ? 'Déconnexion...' : 'Déconnecter'}
+                      {isLoading ? `${t('wallet.disconnect')}...` : t('wallet.disconnect')}
                     </button>
                   </div>
                 )}
@@ -317,12 +332,12 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
               >
                 <Wallet className="w-3.5 h-3.5" />
                 <span className="hidden lg:block">
-                  {isLoading ? 'CONNEXION...' : 'WALLET'}
+                  {isLoading ? `${t('wallet.connect').toUpperCase()}...` : t('wallet.connect').toUpperCase()}
                 </span>
               </button>
             )}
 
-            <div className="relative">
+            <div className="relative" ref={langMenuRef}>
               <button
                 onClick={(e) => {
                   e.preventDefault()
@@ -331,7 +346,6 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   setIsLangMenuOpen(!isLangMenuOpen)
                 }}
                 className="flex items-center space-x-1.5 bg-transparent hover:bg-white/10 text-white px-3 py-2 rounded-full transition-all duration-200 text-sm font-bold border-2 border-white/60 shadow-lg"
-                ref={langMenuRef}
               >
                 {getCurrentFlag()}
                 <span>{currentLang.toUpperCase()}</span>
@@ -403,7 +417,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   currentPage === 'home' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                ACCUEIL
+                {t('nav.home').toUpperCase()}
               </button>
               <button 
                 onClick={() => { onNavigate('marketplace'); setIsMenuOpen(false); }} 
@@ -411,7 +425,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   currentPage === 'marketplace' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                MARKETPLACE
+                {t('nav.marketplace').toUpperCase()}
               </button>
               <button 
                 onClick={() => { onNavigate('collections'); setIsMenuOpen(false); }} 
@@ -419,7 +433,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   currentPage === 'collections' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                COLLECTIONS
+                {t('nav.collections').toUpperCase()}
               </button>
               <button 
                 onClick={() => { onNavigate('transactions'); setIsMenuOpen(false); }} 
@@ -427,7 +441,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   currentPage === 'transactions' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                TRANSACTIONS
+                {t('nav.transactions').toUpperCase()}
               </button>
               <button 
                 onClick={() => { onNavigate('statistics'); setIsMenuOpen(false); }} 
@@ -435,7 +449,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   currentPage === 'statistics' ? 'text-[#7A52D1]' : 'text-gray-300 hover:text-white'
                 }`}
               >
-                STATISTIQUES
+                {t('nav.statistics').toUpperCase()}
               </button>
               
               {!isConnected && (
@@ -445,7 +459,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                   disabled={isLoading}
                 >
                   <Wallet className="w-4 h-4" />
-                  <span>{isLoading ? 'CONNEXION...' : 'WALLET'}</span>
+                  <span>{isLoading ? `${t('wallet.connect').toUpperCase()}...` : t('wallet.connect').toUpperCase()}</span>
                 </button>
               )}
             </nav>
