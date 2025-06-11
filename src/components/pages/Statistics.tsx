@@ -324,7 +324,30 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
   }
 
   const handleCollectionClick = (collection: any) => {
-    onNavigate('collection-detail', collection)
+    // Adapter les données de collection pour la page de détail
+    const adaptedCollection = {
+      id: collection.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+      name: collection.name,
+      description: collection.description || `La collection ${collection.name} est une série exclusive d'UNIQs dans l'écosystème Ultra.`,
+      image: collection.image,
+      banner: collection.image, // Use the same image as banner
+      creator: collection.creator || 'Ultra Creator',
+      verified: collection.verified !== undefined ? collection.verified : true,
+      totalItems: collection.items || 0,
+      items: collection.items || 0,
+      owners: collection.owners || 0,
+      floorPrice: collection.floorPrice || 0,
+      volume: collection.volume || 0,
+      volumeChange: collection.change || 0,
+      change24h: collection.change || 0,
+      category: 'Gaming',
+      likes: Math.floor((collection.owners || 100) * 0.3),
+      views: Math.floor((collection.owners || 100) * 2.5),
+      trending: (collection.change || 0) > 15,
+      featured: (collection.change || 0) > 20,
+      rarity: (collection.change || 0) > 30 ? 'Legendary' : (collection.change || 0) > 15 ? 'Epic' : (collection.change || 0) > 5 ? 'Rare' : 'Common'
+    }
+    onNavigate('collection-detail', adaptedCollection)
   }
 
   const handleTransactionClick = (transaction: any) => {
@@ -350,7 +373,7 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
         <div className="relative container mx-auto px-6 py-16">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
-              Statistiques du Marketplace
+              Statistiques de la Marketplace
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Analysez les tendances, suivez les performances et découvrez les insights du marché Ultra
@@ -766,15 +789,14 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       </div>
 
       {/* Modale de transaction */}
-      {isTransactionModalOpen && selectedTransaction && (
-        <TransactionModal
-          transaction={selectedTransaction}
-          onClose={() => {
-            setIsTransactionModalOpen(false)
-            setSelectedTransaction(null)
-          }}
-        />
-      )}
+      <TransactionModal
+        transaction={selectedTransaction}
+        isOpen={isTransactionModalOpen}
+        onClose={() => {
+          setIsTransactionModalOpen(false)
+          setSelectedTransaction(null)
+        }}
+      />
     </div>
   )
 }

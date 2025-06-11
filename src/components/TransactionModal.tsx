@@ -22,13 +22,14 @@ interface Transaction {
 
 interface TransactionModalProps {
   transaction: Transaction | null
+  isOpen: boolean
   onClose: () => void
 }
 
-const TransactionModal = ({ transaction, onClose }: TransactionModalProps) => {
+const TransactionModal = ({ transaction, isOpen, onClose }: TransactionModalProps) => {
   const [copied, setCopied] = React.useState('')
 
-  if (!transaction) return null
+  if (!transaction || !isOpen) return null
 
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text)

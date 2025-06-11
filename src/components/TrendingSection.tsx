@@ -634,7 +634,13 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                 </div>
 
                 {/* Action Button */}
-                <button className="w-full bg-gradient-to-r from-[#7A52D1]/20 to-violet-600/20 hover:from-[#7A52D1]/30 hover:to-violet-600/30 border border-[#7A52D1]/30 hover:border-[#7A52D1]/50 text-white py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 group">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(item);
+                  }}
+                  className="w-full bg-gradient-to-r from-[#7A52D1]/20 to-violet-600/20 hover:from-[#7A52D1]/30 hover:to-violet-600/30 border border-[#7A52D1]/30 hover:border-[#7A52D1]/50 text-white py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 group"
+                >
                   <Zap className="w-4 h-4 group-hover:text-[#7A52D1] transition-colors" />
                   <span>Explorer l'UNIQ</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

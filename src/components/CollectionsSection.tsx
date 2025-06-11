@@ -217,7 +217,37 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="bg-[#7A52D1] hover:bg-[#6A42C1] text-white px-6 py-3 rounded-full font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center space-x-2">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onNavigate) {
+                        // Adapter les données pour CollectionDetailPage
+                        const adaptedCollection = {
+                          id: collection.title.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                          name: collection.title,
+                          description: collection.description,
+                          image: collection.image,
+                          banner: collection.image,
+                          creator: collection.subtitle === "Collection Exclusive" ? "UltraTeam" : "UltraCreator",
+                          verified: collection.verified,
+                          totalItems: parseInt(collection.stats.items.replace('K', '000')),
+                          items: parseInt(collection.stats.items.replace('K', '000')),
+                          owners: parseInt(collection.stats.owners.replace('K', '000')),
+                          floorPrice: parseFloat(collection.stats.floor.replace(' UOS', '')),
+                          volume: parseFloat(collection.stats.volume.replace('M UOS', '').replace('K UOS', '')) * (collection.stats.volume.includes('M') ? 1000000 : 1000),
+                          volumeChange: Math.random() * 20 - 10, // Random change for demo
+                          category: collection.subtitle,
+                          featured: true,
+                          rarity: collection.rarity,
+                          trending: collection.trending,
+                          likes: Math.floor(Math.random() * 10000),
+                          views: Math.floor(Math.random() * 50000)
+                        };
+                        onNavigate('collection-detail', adaptedCollection);
+                      }
+                    }}
+                    className="bg-[#7A52D1] hover:bg-[#6A42C1] text-white px-6 py-3 rounded-full font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center space-x-2"
+                  >
                     <Eye className="w-4 h-4" />
                     <span>Voir Collection</span>
                   </button>
@@ -254,7 +284,33 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
 
                 {/* Action Button */}
                 <button 
-                  onClick={() => onNavigate && onNavigate('collection-detail', collection)}
+                  onClick={() => {
+                    if (onNavigate) {
+                      // Adapter les données pour CollectionDetailPage
+                      const adaptedCollection = {
+                        id: collection.title.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                        name: collection.title,
+                        description: collection.description,
+                        image: collection.image,
+                        banner: collection.image,
+                        creator: collection.subtitle === "Collection Exclusive" ? "UltraTeam" : "UltraCreator",
+                        verified: collection.verified,
+                        totalItems: parseInt(collection.stats.items.replace('K', '000')),
+                        items: parseInt(collection.stats.items.replace('K', '000')),
+                        owners: parseInt(collection.stats.owners.replace('K', '000')),
+                        floorPrice: parseFloat(collection.stats.floor.replace(' UOS', '')),
+                        volume: parseFloat(collection.stats.volume.replace('M UOS', '').replace('K UOS', '')) * (collection.stats.volume.includes('M') ? 1000000 : 1000),
+                        volumeChange: Math.random() * 20 - 10, // Random change for demo
+                        category: collection.subtitle,
+                        featured: true,
+                        rarity: collection.rarity,
+                        trending: collection.trending,
+                        likes: Math.floor(Math.random() * 10000),
+                        views: Math.floor(Math.random() * 50000)
+                      };
+                      onNavigate('collection-detail', adaptedCollection);
+                    }
+                  }}
                   className="w-full bg-gradient-to-r from-[#7A52D1]/20 to-blue-500/20 hover:from-[#7A52D1]/30 hover:to-blue-500/30 border border-[#7A52D1]/30 hover:border-[#7A52D1]/50 text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group mt-auto"
                 >
                   <span>Explorer</span>

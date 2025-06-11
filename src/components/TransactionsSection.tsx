@@ -15,7 +15,11 @@ import {
   Award
 } from 'lucide-react';
 
-const TransactionsSection = () => {
+interface TransactionsSectionProps {
+  onNavigate?: (page: string) => void;
+}
+
+const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'marketplace' | 'launchpad'>('marketplace');
   const [filter, setFilter] = useState('all');
@@ -392,10 +396,13 @@ const TransactionsSection = () => {
 
         {/* Call to Action */}
         <div className="text-center">
-          <button className="group bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/30 hover:shadow-[#7A52D1]/50 border border-[#7A52D1]/30">
+          <button 
+            onClick={() => onNavigate && onNavigate('transactions')}
+            className="group bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/30 hover:shadow-[#7A52D1]/50 border border-[#7A52D1]/30"
+          >
             <span className="flex items-center space-x-2">
               <span>Voir Toutes les Transactions</span>
-              <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
         </div>

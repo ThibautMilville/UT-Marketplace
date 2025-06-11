@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Github, Twitter, MessageCircle, Globe, Mail, Heart, ExternalLink, ArrowUp } from 'lucide-react'
+import { Instagram, Twitter, Youtube, Twitch, MessageCircle, Mail, Heart, ExternalLink, ArrowUp } from 'lucide-react'
 
 const Footer = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
@@ -20,10 +20,11 @@ const Footer = () => {
   }
 
   const socialLinks = [
-    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/ultra_io', color: 'hover:text-blue-400' },
-    { name: 'Discord', icon: MessageCircle, url: 'https://discord.gg/ultra', color: 'hover:text-indigo-400' },
-    { name: 'Github', icon: Github, url: 'https://github.com/ultraio', color: 'hover:text-gray-300' },
-    { name: 'Website', icon: Globe, url: 'https://ultra.io', color: 'hover:text-[#7A52D1]' }
+    { name: 'Twitter', icon: Twitter, url: 'https://x.com/Ultra_TimesEN', color: 'hover:text-blue-400' },
+    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/ultratimes/', color: 'hover:text-pink-400' },
+    { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@ultra-times', color: 'hover:text-red-400' },
+    { name: 'Twitch', icon: Twitch, url: 'https://www.twitch.tv/ultratimes', color: 'hover:text-purple-400' },
+    { name: 'Discord', icon: MessageCircle, url: 'https://discord.com/invite/Pgh85akHj8', color: 'hover:text-indigo-400' } // MessageCircle pour Discord
   ]
 
   const footerLinks = {
@@ -138,7 +139,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0">
               <h3 className="text-2xl font-bold text-white mb-2">Restez informé</h3>
-              <p className="text-gray-400">Recevez les dernières actualités et mises à jour du marketplace Ultra</p>
+              <p className="text-gray-400">Recevez les dernières actualités et mises à jour de la marketplace Ultra Times</p>
             </div>
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full md:w-auto">
               <input

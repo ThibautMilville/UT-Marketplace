@@ -164,7 +164,24 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
 
   const handleItemClick = (item: any) => {
     if (onNavigate) {
-      onNavigate('uniq-detail', item);
+      // Adapter les données pour UniqDetailPage
+      const adaptedItem = {
+        id: item.id,
+        name: item.title, // title -> name
+        collection: item.collection,
+        price: parseFloat(item.price), // Convertir string en number
+        priceUSD: parseFloat(item.priceUSD), // Convertir string en number
+        image: item.image,
+        rarity: item.rarity,
+        creator: item.creator,
+        verified: item.verified,
+        trending: item.trending,
+        timeLeft: item.timeLeft,
+        likes: item.likes,
+        views: item.views,
+        edition: item.edition
+      };
+      onNavigate('uniq-detail', adaptedItem);
     }
   };
 
@@ -329,7 +346,13 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
                   </div>
 
                   {/* Action Button */}
-                  <button className="w-full bg-gradient-to-r from-[#7A52D1] to-blue-500 hover:from-[#6A42C1] hover:to-blue-600 text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleItemClick(item);
+                    }}
+                    className="w-full bg-gradient-to-r from-[#7A52D1] to-blue-500 hover:from-[#6A42C1] hover:to-blue-600 text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group"
+                  >
                     <Eye className="w-4 h-4" />
                     <span>Explorer l'UNIQ</span>
                   </button>

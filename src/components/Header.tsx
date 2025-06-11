@@ -142,9 +142,9 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
 
   const getBreadcrumb = () => {
     const breadcrumbClass = "flex items-center space-x-2 text-sm bg-black/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-[#7A52D1]/20";
-    const linkClass = "hover:text-[#7A52D1] transition-colors duration-200 font-medium";
+    const linkClass = "text-gray-300 hover:text-[#7A52D1] transition-colors duration-200 font-medium cursor-pointer";
     const currentClass = "text-[#7A52D1] font-bold";
-    const separatorClass = "text-gray-600";
+    const separatorClass = "text-gray-500";
 
     switch (currentPage) {
       case 'uniq-detail':
@@ -307,7 +307,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
                 </button>
                 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50">
+                  <div className="absolute right-0 mt-2 w-48 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50 z-[60]">
                     <div className="px-4 py-2 border-b border-gray-700/50">
                       <p className="text-xs text-gray-400">{t('wallet.connectedTo')}</p>
                       <p className="text-sm text-white truncate">
@@ -353,7 +353,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
               </button>
               
               {isLangMenuOpen && (
-                <div className="absolute right-0 mt-2 w-28 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50 z-50">
+                <div className="absolute right-0 mt-2 w-28 bg-black/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 border border-gray-700/50 z-[60]">
                   {['en', 'fr', 'de'].map(lang => (
                     <button
                       key={lang}
@@ -467,7 +467,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
         )}
         
         {currentPage !== 'home' && (
-          <div className="py-3 border-t border-[#7A52D1]/10">
+          <div className="py-3 border-t border-[#7A52D1]/10 relative z-40">
             {getBreadcrumb()}
           </div>
         )}

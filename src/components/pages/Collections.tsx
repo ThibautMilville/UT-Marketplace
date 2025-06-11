@@ -553,10 +553,35 @@ const Collections = ({ onNavigate }: CollectionsProps) => {
               Collections en Vedette
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredCollections.slice(0, 6).map(collection => (
+              {featuredCollections.slice(0, 6).map(collection => {
+                const handleCollectionClick = () => {
+                  const adaptedCollection = {
+                    id: collection.id,
+                    name: collection.name,
+                    description: collection.description,
+                    image: collection.image,
+                    banner: collection.banner,
+                    creator: collection.creator,
+                    totalItems: collection.items,
+                    owners: collection.owners,
+                    floorPrice: collection.floorPrice,
+                    volume: collection.volume,
+                    volumeChange: collection.change24h,
+                    verified: collection.verified,
+                    category: collection.category,
+                    featured: collection.featured,
+                    rarity: collection.rarity,
+                    trending: collection.trending,
+                    likes: collection.likes,
+                    views: collection.views,
+                  };
+                  onNavigate?.('collection-detail', adaptedCollection);
+                };
+
+                return (
                 <div 
                   key={collection.id} 
-                  onClick={() => onNavigate?.('collection-detail', collection)}
+                  onClick={handleCollectionClick}
                   className="group relative bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-[#7A52D1]/20 hover:border-[#7A52D1]/40 transition-all duration-300 cursor-pointer transform hover:scale-105"
                 >
                   <div className="relative h-48 overflow-hidden">
@@ -637,7 +662,8 @@ const Collections = ({ onNavigate }: CollectionsProps) => {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -894,10 +920,35 @@ const Collections = ({ onNavigate }: CollectionsProps) => {
         {/* Collections Grid/List */}
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredCollections.map(collection => (
+            {filteredCollections.map(collection => {
+              const handleCollectionClick = () => {
+                const adaptedCollection = {
+                  id: collection.id,
+                  name: collection.name,
+                  description: collection.description,
+                  image: collection.image,
+                  banner: collection.banner,
+                  creator: collection.creator,
+                  totalItems: collection.items,
+                  owners: collection.owners,
+                  floorPrice: collection.floorPrice,
+                  volume: collection.volume,
+                  volumeChange: collection.change24h,
+                  verified: collection.verified,
+                  category: collection.category,
+                  featured: collection.featured,
+                  rarity: collection.rarity,
+                  trending: collection.trending,
+                  likes: collection.likes,
+                  views: collection.views,
+                };
+                onNavigate?.('collection-detail', adaptedCollection);
+              };
+
+              return (
               <div 
                 key={collection.id}
-                onClick={() => onNavigate?.('collection-detail', collection)}
+                onClick={handleCollectionClick}
                 className="group bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-[#7A52D1]/20 hover:border-[#7A52D1]/40 transition-all duration-300 cursor-pointer transform hover:scale-105"
               >
                 <div className="relative h-48 overflow-hidden">
@@ -968,14 +1019,40 @@ const Collections = ({ onNavigate }: CollectionsProps) => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredCollections.map(collection => (
+            {filteredCollections.map(collection => {
+              const handleCollectionClick = () => {
+                const adaptedCollection = {
+                  id: collection.id,
+                  name: collection.name,
+                  description: collection.description,
+                  image: collection.image,
+                  banner: collection.banner,
+                  creator: collection.creator,
+                  totalItems: collection.items,
+                  owners: collection.owners,
+                  floorPrice: collection.floorPrice,
+                  volume: collection.volume,
+                  volumeChange: collection.change24h,
+                  verified: collection.verified,
+                  category: collection.category,
+                  featured: collection.featured,
+                  rarity: collection.rarity,
+                  trending: collection.trending,
+                  likes: collection.likes,
+                  views: collection.views,
+                };
+                onNavigate?.('collection-detail', adaptedCollection);
+              };
+
+              return (
               <div 
                 key={collection.id}
-                onClick={() => onNavigate?.('collection-detail', collection)}
+                onClick={handleCollectionClick}
                 className="group bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-[#7A52D1]/20 hover:border-[#7A52D1]/40 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center space-x-6">
@@ -1030,7 +1107,8 @@ const Collections = ({ onNavigate }: CollectionsProps) => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

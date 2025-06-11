@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ArrowLeft, TrendingUp, TrendingDown, Users, Eye, Heart, Share2, Filter, Grid, List, Search } from 'lucide-react'
+import ShareModal from '../ShareModal'
 
 interface CollectionDetailPageProps {
   onNavigate: (page: string, data?: any) => void
@@ -11,6 +12,7 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
   const [sortBy, setSortBy] = useState('price_low')
   const [filterRarity, setFilterRarity] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false)
 
   // Données mockées pour la collection
   const collection = collectionData || {
@@ -152,7 +154,27 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
             <h1 className="text-4xl font-bold mb-2">{collection.name}</h1>
             <p className="text-gray-300 mb-4 max-w-2xl">{collection.description}</p>
             <div className="flex items-center space-x-6 text-sm">
-              <span className="text-gray-400">Par <span className="text-[#7A52D1] font-medium">{collection.creator}</span></span>
+              <span className="text-gray-400">Par <button 
+                onClick={() => {
+                  const creatorData = {
+                    id: collection.creator.toLowerCase().replace(/\s+/g, ''),
+                    name: collection.creator,
+                    displayName: collection.creator,
+                    bio: `Créateur de ${collection.name} et d'autres collections exceptionnelles.`,
+                    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop&q=80",
+                    banner: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=400&fit=crop&q=80",
+                    verified: true,
+                    featured: false,
+                    joinDate: "2023",
+                    location: "Ultra Ecosystem",
+                    walletAddress: `${collection.creator.toLowerCase().replace(/\s+/g, '')}.ultra`,
+                  };
+                  onNavigate("creator", creatorData);
+                }}
+                className="text-[#7A52D1] font-medium hover:text-[#6A42C1] transition-colors cursor-pointer"
+              >
+                {collection.creator}
+              </button></span>
               <span className="text-gray-400">{collection.totalItems?.toLocaleString() || collection.items?.toLocaleString() || '0'} items</span>
               <span className="text-gray-400">{collection.owners?.toLocaleString() || '0'} propriétaires</span>
             </div>
@@ -162,7 +184,10 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
             <button className="p-3 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-colors">
               <Heart className="w-5 h-5" />
             </button>
-            <button className="p-3 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-colors">
+            <button 
+              onClick={() => setIsShareModalOpen(true)}
+              className="p-3 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-colors"
+            >
               <Share2 className="w-5 h-5" />
             </button>
           </div>
@@ -261,10 +286,32 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
             : 'grid-cols-1'
         }`}>
-          {nfts.map((nft) => (
+          {nfts.map((nft) => {
+            const handleNftClick = () => {
+              const adaptedUniq = {
+                id: nft.id.toString(),
+                name: nft.name,
+                collection: collection.name,
+                price: nft.price,
+                priceUSD: nft.price * 20, // Conversion approximative
+                image: nft.image,
+                rarity: nft.rarity,
+                seller: nft.owner,
+                likes: nft.liked ? 100 : 50,
+                views: nft.views,
+                rarityRank: nft.rank,
+                attributes: [
+                  { trait: "Rarity", value: nft.rarity, rarity: "5%" },
+                  { trait: "Rank", value: `#${nft.rank}`, rarity: "1%" },
+                ],
+              };
+              onNavigate('uniq-detail', adaptedUniq);
+            };
+
+            return (
             <div 
               key={nft.id} 
-              onClick={() => onNavigate('uniq-detail', nft)}
+              onClick={handleNftClick}
               className="bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-[#7A52D1]/20 hover:border-[#7A52D1]/40 transition-all duration-300 group cursor-pointer"
             >
               <div className="relative">
@@ -303,9 +350,19 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={collection.name}
+        description={collection.description}
+        imageUrl={collection.image}
+      />
     </div>
   )
 }
