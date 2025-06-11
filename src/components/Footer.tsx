@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Instagram, Twitter, Youtube, Twitch, MessageCircle, Mail, Heart, ExternalLink, ArrowUp } from 'lucide-react'
+import { useTranslation } from '../contexts/TranslationContext'
 
 const Footer = () => {
+  const { t } = useTranslation();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 text-lg leading-relaxed mb-6 max-w-md">
-              La première marketplace NFT de l'écosystème Ultra. Découvrez, achetez et vendez des NFTs uniques avec une expérience utilisateur révolutionnaire.
+              {t('footer.description')}
             </p>
             
             {/* Réseaux sociaux */}
@@ -138,17 +140,17 @@ const Footer = () => {
         <div className="bg-gradient-to-r from-[#7A52D1]/10 to-blue-600/10 rounded-2xl p-8 mb-12 border border-[#7A52D1]/20">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0">
-              <h3 className="text-2xl font-bold text-white mb-2">Restez informé</h3>
-              <p className="text-gray-400">Recevez les dernières actualités et mises à jour de la marketplace Ultra Times</p>
+              <h3 className="text-2xl font-bold text-white mb-2">{t('footer.newsletter.title')}</h3>
+              <p className="text-gray-400">{t('footer.newsletter.description')}</p>
             </div>
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full md:w-auto">
               <input
                 type="email"
-                placeholder="Votre adresse email"
+                placeholder={t('footer.newsletter.placeholder')}
                 className="px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#7A52D1] focus:outline-none transition-colors min-w-[300px]"
               />
               <button className="px-6 py-3 bg-[#7A52D1] hover:bg-[#6A42C1] text-white rounded-xl transition-colors font-medium whitespace-nowrap">
-                S'abonner
+                {t('footer.newsletter.subscribe')}
               </button>
             </div>
           </div>
@@ -158,19 +160,19 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           <div className="text-center">
             <div className="text-3xl font-bold text-[#7A52D1] mb-2">24.5K+</div>
-            <div className="text-gray-400">NFTs Tradés</div>
+            <div className="text-gray-400">{t('footer.stats.nftsTraded')}</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-[#7A52D1] mb-2">8.2K+</div>
-            <div className="text-gray-400">Utilisateurs Actifs</div>
+            <div className="text-gray-400">{t('footer.stats.activeUsers')}</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-[#7A52D1] mb-2">2.4M</div>
-            <div className="text-gray-400">Volume Total (UOS)</div>
+            <div className="text-gray-400">{t('footer.stats.totalVolume')}</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-[#7A52D1] mb-2">234</div>
-            <div className="text-gray-400">Collections</div>
+            <div className="text-gray-400">{t('footer.stats.collections')}</div>
           </div>
         </div>
 
@@ -181,9 +183,9 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-gray-400 text-sm">
               <div className="flex items-center space-x-2">
                 <span>© {currentYear} Ultra Times Marketplace.</span>
-                <span>Fait avec</span>
+                <span>{t('footer.madeWith')}</span>
                 <Heart className="w-4 h-4 text-red-400 animate-pulse" />
-                <span>pour la communauté Ultra</span>
+                <span>{t('footer.forCommunity')}</span>
               </div>
               <div className="flex items-center space-x-4">
                 {legalLinks.map((link, index) => (
@@ -205,7 +207,7 @@ const Footer = () => {
               onClick={scrollToTop}
               className="flex items-center space-x-2 px-4 py-2 bg-gray-800/50 hover:bg-[#7A52D1]/20 text-gray-400 hover:text-[#7A52D1] rounded-xl transition-all duration-200 group"
             >
-              <span>Retour en haut</span>
+              <span>{t('footer.backToTop')}</span>
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
             </button>
           </div>

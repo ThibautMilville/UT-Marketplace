@@ -29,74 +29,39 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
     verified: true
   }
 
-  const nfts = [
-    {
-      id: 1,
-      name: 'Ultra Power Genesis #3847',
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=300&fit=crop',
-      price: 245.50,
-      rarity: 'Legendary',
-      rank: 47,
-      owner: 'ultrawhale92',
-      liked: false,
-      views: 1247
-    },
-    {
-      id: 2,
-      name: 'Ultra Power Genesis #1205',
-      image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=300&h=300&fit=crop',
-      price: 189.75,
-      rarity: 'Epic',
-      rank: 156,
-      owner: 'spacehunter',
-      liked: true,
-      views: 892
-    },
-    {
-      id: 3,
-      name: 'Ultra Power Genesis #892',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop',
-      price: 156.80,
-      rarity: 'Rare',
-      rank: 234,
-      owner: 'bidmaster',
-      liked: false,
-      views: 634
-    },
-    {
-      id: 4,
-      name: 'Ultra Power Genesis #2398',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop',
-      price: 143.90,
-      rarity: 'Rare',
-      rank: 287,
-      owner: 'mysticholder',
-      liked: true,
-      views: 523
-    },
-    {
-      id: 5,
-      name: 'Ultra Power Genesis #567',
-      image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=300&h=300&fit=crop',
-      price: 298.40,
-      rarity: 'Mythic',
-      rank: 12,
-      owner: 'cyberpunk',
-      liked: false,
-      views: 1856
-    },
-    {
-      id: 6,
-      name: 'Ultra Power Genesis #9876',
-      image: 'https://images.unsplash.com/photo-1635776062043-223faf322554?w=300&h=300&fit=crop',
-      price: 89.50,
-      rarity: 'Common',
-      rank: 567,
-      owner: 'collector99',
-      liked: true,
-      views: 345
-    }
-  ]
+  // Générer 15 UNIQs basés sur l'image de la collection
+  const generateNfts = () => {
+    const rarities = ['Mythic', 'Legendary', 'Epic', 'Rare', 'Common'];
+    const owners = ['ultrawhale92', 'spacehunter', 'bidmaster', 'mysticholder', 'cyberpunk', 'collector99', 'nftmaster', 'cryptolord', 'digitalking', 'blockchainer', 'metaverse', 'ultratrader', 'nftgod', 'collector', 'investor'];
+    
+    return Array.from({ length: 15 }, (_, index) => {
+      const rarity = rarities[Math.floor(Math.random() * rarities.length)];
+      const rarityMultiplier = {
+        'Mythic': 3.0,
+        'Legendary': 2.0,
+        'Epic': 1.5,
+        'Rare': 1.2,
+        'Common': 1.0
+      }[rarity] || 1.0;
+      
+      const basePrice = collection.floorPrice || 100;
+      const price = basePrice * rarityMultiplier * (0.8 + Math.random() * 0.4);
+      
+      return {
+        id: index + 1,
+        name: `${collection.name} #${(index + 1).toString().padStart(4, '0')}`,
+        image: collection.image, // Utilise la même image que la collection
+        price: Math.round(price * 100) / 100,
+        rarity,
+        rank: index + 1,
+        owner: owners[Math.floor(Math.random() * owners.length)],
+        liked: Math.random() > 0.7,
+        views: Math.floor(Math.random() * 2000) + 100
+      };
+    });
+  };
+
+  const nfts = generateNfts();
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
@@ -111,6 +76,30 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
 
   const formatPrice = (price: number) => `${price.toLocaleString()} UOS`
   const formatChange = (change: number) => `${change > 0 ? '+' : ''}${change.toFixed(1)}%`
+
+  const handleUniqClick = (nft: any) => {
+    if (onNavigate) {
+      const adaptedUniq = {
+        id: nft.id,
+        name: nft.name,
+        collection: collection.name,
+        price: nft.price,
+        priceUSD: nft.price * 2, // Estimation USD
+        image: nft.image,
+        rarity: nft.rarity,
+        creator: collection.creator,
+        verified: collection.verified || true,
+        trending: Math.random() > 0.5,
+        timeLeft: "2h 15m",
+        likes: nft.liked ? Math.floor(Math.random() * 500) + 100 : Math.floor(Math.random() * 200) + 50,
+        views: nft.views,
+        edition: `${nft.id}/15`,
+        seller: nft.owner,
+        rank: nft.rank
+      };
+      onNavigate('uniq-detail', adaptedUniq);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-[#7A52D1]/10 to-black text-white">
@@ -288,24 +277,7 @@ const CollectionDetailPage = ({ onNavigate, collectionData }: CollectionDetailPa
         }`}>
           {nfts.map((nft) => {
             const handleNftClick = () => {
-              const adaptedUniq = {
-                id: nft.id.toString(),
-                name: nft.name,
-                collection: collection.name,
-                price: nft.price,
-                priceUSD: nft.price * 20, // Conversion approximative
-                image: nft.image,
-                rarity: nft.rarity,
-                seller: nft.owner,
-                likes: nft.liked ? 100 : 50,
-                views: nft.views,
-                rarityRank: nft.rank,
-                attributes: [
-                  { trait: "Rarity", value: nft.rarity, rarity: "5%" },
-                  { trait: "Rank", value: `#${nft.rank}`, rarity: "1%" },
-                ],
-              };
-              onNavigate('uniq-detail', adaptedUniq);
+              handleUniqClick(nft);
             };
 
             return (

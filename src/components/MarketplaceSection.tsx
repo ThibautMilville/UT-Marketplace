@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Star, TrendingUp, Eye, Heart, ShoppingCart, Zap, Timer, ArrowRight } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface MarketplaceSectionProps {
   onNavigate?: (page: string, data?: any) => void;
 }
 
 const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
+  const { t } = useTranslation();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [likedItems, setLikedItems] = useState<Set<string>>(new Set());
 
@@ -30,15 +32,15 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
 
   const items = [
     {
-      id: "UG-001",
-      title: "Ultra Genesis #3847",
-      collection: "Ultra Genesis",
-      price: "245.5",
-      priceUSD: "294.6",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=400&fit=crop&q=80",
-      edition: "3847/10000",
+      id: "UA-001",
+      title: "Ultra Apes #0001",
+      collection: "Ultra Apes Collection",
+      price: "125.5",
+      priceUSD: "251.0",
+      image: "/collections/ultra-apes.jpeg",
+      edition: "1/15",
       rarity: "Legendary",
-      creator: "UltraArt",
+      creator: "UltraTeam",
       verified: true,
       trending: true,
       timeLeft: "2h 15m",
@@ -46,109 +48,116 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
       views: 1567
     },
     {
-      id: "CW-205",
-      title: "Cosmic Warrior Elite #1205",
-      collection: "Cosmic Warriors",
-      price: "89.2",
-      priceUSD: "107.0",
-      image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=400&h=400&fit=crop&q=80",
-      rarity: "Epic",
-      creator: "SpaceArt",
+      id: "CP-001",
+      title: "Cypherpunk #0001",
+      collection: "Cypherpunk Revolution",
+      price: "234.8",
+      priceUSD: "469.6",
+      image: "/collections/cypherpunk.jpg",
+      edition: "1/15",
+      rarity: "Mythic",
+      creator: "CyberArt",
       verified: true,
-      trending: false,
+      trending: true,
       timeLeft: "5h 42m",
-      likes: 156,
-      views: 892
+      likes: 456,
+      views: 2890
     },
     {
-      id: "DL-892",
-      title: "Digital Legend Rare #892",
-      collection: "Digital Legends",
-      price: "156.8",
-      priceUSD: "188.2",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&q=80",
-      rarity: "Rare",
-      creator: "DigitalMaster",
-      verified: false,
+      id: "PA-001",
+      title: "Phygital Artifact #0001",
+      collection: "Phygital Artifacts",
+      price: "298.9",
+      priceUSD: "597.8",
+      image: "/collections/phygital.png",
+      edition: "1/15",
+      rarity: "Mythic",
+      creator: "PhygitalMaster",
+      verified: true,
       trending: true,
       timeLeft: "1d 3h",
-      likes: 89,
-      views: 445
+      likes: 589,
+      views: 3445
     },
     {
-      id: "MC-398",
-      title: "Mystic Creature #2398",
-      collection: "Mystic Creatures",
-      price: "43.9",
-      priceUSD: "52.7",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&q=80",
-      rarity: "Common",
-      creator: "MysticArts",
-      verified: true,
-      trending: false,
-      timeLeft: "12h 30m",
-      likes: 67,
-      views: 234
-    },
-    {
-      id: "CPE-567",
-      title: "Cyber Punk Elite #567",
-      collection: "Cyber Punks Elite",
-      price: "198.4",
-      priceUSD: "238.1",
-      image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&h=400&fit=crop&q=80",
-      rarity: "Legendary",
-      creator: "CyberCreator",
+      id: "AG-001",
+      title: "Ashes Genesis #0001",
+      collection: "Ashes Genesis",
+      price: "456.8",
+      priceUSD: "913.6",
+      image: "/collections/ashes.png",
+      edition: "1/15",
+      rarity: "Mythic",
+      creator: "AshesTeam",
       verified: true,
       trending: true,
+      timeLeft: "12h 30m",
+      likes: 678,
+      views: 4234
+    },
+    {
+      id: "FG-001",
+      title: "Freedom Gamer #0001",
+      collection: "Freedom Gamers Elite",
+      price: "167.2",
+      priceUSD: "334.4",
+      image: "/collections/freedom-gamers.png",
+      edition: "1/15",
+      rarity: "Legendary",
+      creator: "FreedomCreator",
+      verified: true,
+      trending: false,
       timeLeft: "6h 15m",
       likes: 312,
       views: 1234
     },
     {
-      id: "UR-123",
-      title: "Ultra Racer #123",
-      collection: "Ultra Racers",
-      price: "312.7",
-      priceUSD: "375.2",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=400&fit=crop&q=80",
-      rarity: "Mythic",
-      creator: "RaceArt",
+      id: "UB-001",
+      title: "Ultra Boat #0001",
+      collection: "Ultra Boat Adventures",
+      price: "89.8",
+      priceUSD: "179.6",
+      image: "/collections/ultra-boat.jpeg",
+      edition: "1/15",
+      rarity: "Epic",
+      creator: "BoatArt",
       verified: true,
       trending: true,
       timeLeft: "4h 20m",
-      likes: 445,
-      views: 2156
+      likes: 189,
+      views: 956
     },
     {
-      id: "FG-789",
-      title: "Future Guardian #789",
-      collection: "Future Guardians",
-      price: "67.3",
-      priceUSD: "80.8",
-      image: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=400&h=400&fit=crop&q=80",
-      rarity: "Rare",
-      creator: "FutureArts",
-      verified: false,
+      id: "DC-001",
+      title: "Digital Counsellor #0001",
+      collection: "Digital Counsellor",
+      price: "156.8",
+      priceUSD: "313.6",
+      image: "/collections/counsellor.png",
+      edition: "1/15",
+      rarity: "Epic",
+      creator: "DigitalArts",
+      verified: true,
       trending: false,
       timeLeft: "8h 45m",
-      likes: 123,
-      views: 567
+      likes: 234,
+      views: 1567
     },
     {
-      id: "NS-456",
-      title: "Neon Samurai #456",
-      collection: "Neon Samurai",
+      id: "UF-001",
+      title: "Ultra Fashion #0001",
+      collection: "Ultra Fashion Elite",
       price: "134.6",
-      priceUSD: "161.5",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&q=80",
+      priceUSD: "269.2",
+      image: "/collections/ultra-clothes-1.png",
+      edition: "1/15",
       rarity: "Epic",
-      creator: "NeonMaster",
+      creator: "FashionMaster",
       verified: true,
       trending: false,
       timeLeft: "15h 10m",
-      likes: 198,
-      views: 789
+      likes: 298,
+      views: 1789
     }
   ];
 
@@ -215,20 +224,20 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-[#7A52D1]/20 backdrop-blur-sm border border-[#7A52D1]/30 rounded-full px-4 py-2 mb-6">
             <ShoppingCart className="w-4 h-4 text-[#7A52D1]" />
-            <span className="text-sm text-white font-medium">UNIQs en Vente</span>
+            <span className="text-sm text-white font-medium">{t('home.marketplace.subtitle')}</span>
           </div>
           
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-              Marketplace
+              {t('home.marketplace.title').split(' ')[0]}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
-              Ultra
+              {t('home.marketplace.title').split(' ')[1]}
             </span>
           </h2>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Découvrez et collectionnez les UNIQs les plus exclusifs de l'écosystème Ultra avec des expériences uniques
+            {t('home.marketplace.subtitle')}
           </p>
         </div>
 
@@ -262,13 +271,13 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
                     {item.verified && (
                       <div className="bg-green-500/20 backdrop-blur-sm border border-green-500/30 rounded-full px-2 py-1 flex items-center space-x-1">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span className="text-xs text-green-400 font-medium">Vérifié</span>
+                        <span className="text-xs text-green-400 font-medium">{t('marketplace.verified')}</span>
                       </div>
                     )}
                     {item.trending && (
                       <div className="bg-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-full px-2 py-1 flex items-center space-x-1">
                         <TrendingUp className="w-3 h-3 text-red-400" />
-                        <span className="text-xs text-red-400 font-medium">Tendance</span>
+                        <span className="text-xs text-red-400 font-medium">{t('marketplace.trending')}</span>
                       </div>
                     )}
                   </div>
@@ -319,7 +328,7 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
                   <div className="mb-4">
                     <h3 className="text-lg font-bold text-white mb-1 truncate">{item.title}</h3>
                     <p className="text-sm text-[#7A52D1] font-medium mb-1">{item.collection}</p>
-                    <p className="text-xs text-gray-400">par {item.creator}</p>
+                    <p className="text-xs text-gray-400">{t('marketplace.by')} {item.creator}</p>
                   </div>
 
                   {/* Stats */}
@@ -354,7 +363,7 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
                     className="w-full bg-gradient-to-r from-[#7A52D1] to-blue-500 hover:from-[#6A42C1] hover:to-blue-600 text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group"
                   >
                     <Eye className="w-4 h-4" />
-                    <span>Explorer l'UNIQ</span>
+                    <span>{t('marketplace.exploreUniq')}</span>
                   </button>
                 </div>
 
@@ -372,7 +381,7 @@ const MarketplaceSection = ({ onNavigate }: MarketplaceSectionProps) => {
             className="group bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/30 hover:shadow-[#7A52D1]/50 border border-[#7A52D1]/30"
           >
             <span className="flex items-center space-x-2">
-              <span>Voir Tous les UNIQs</span>
+              <span>{t('home.marketplace.exploreNow')}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>

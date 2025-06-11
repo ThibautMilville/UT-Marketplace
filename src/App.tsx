@@ -125,7 +125,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-900">
-      <Header onNavigate={navigateToPage} currentPage={currentPage} />
+      <Header 
+        onNavigate={navigateToPage} 
+        currentPage={currentPage}
+        selectedUniq={selectedUniq}
+        selectedCollection={selectedCollection}
+        selectedCreator={selectedCreator}
+      />
       {renderPage()}
       <Footer />
     </div>

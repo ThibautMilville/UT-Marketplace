@@ -25,6 +25,7 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
   const [visibleMetrics, setVisibleMetrics] = useState<number[]>([]);
   const [currentChart, setCurrentChart] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hoveredPoint, setHoveredPoint] = useState<{index: number, value: number, x: number, y: number} | null>(null);
 
   // Données en temps réel simulées
   const [liveData, setLiveData] = useState({
@@ -58,14 +59,14 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
     return () => observer.disconnect();
   }, []);
 
-  // Rotation des graphiques
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentChart(prev => (prev + 1) % 3);
-    }, 5000);
+  // Suppression de la rotation automatique - sera contrôlée par les clics utilisateur
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentChart(prev => (prev + 1) % 3);
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   // Simulation de données en temps réel
   useEffect(() => {
@@ -161,22 +162,25 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
 
   const chartData = [
     {
-      name: "Volume",
-      data: [120, 135, 145, 160, 175, 190, 185, 200, 220, 240, 245, 250],
+      name: "Volume (UOS)",
+      data: [120000, 135000, 145000, 160000, 175000, 190000, 185000, 200000, 220000, 240000, 245000, 250000],
       color: "#7A52D1",
-      gradient: "from-[#7A52D1]/30 to-transparent"
+      gradient: "from-[#7A52D1]/30 to-transparent",
+      labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"]
     },
     {
-      name: "Utilisateurs",
-      data: [800, 850, 900, 950, 1000, 1100, 1200, 1300, 1250, 1300, 1350, 1400],
+      name: "Utilisateurs Actifs",
+      data: [8000, 8500, 9000, 9500, 10000, 11000, 12000, 13000, 12500, 13000, 13500, 14000],
       color: "#3B82F6",
-      gradient: "from-blue-500/30 to-transparent"
+      gradient: "from-blue-500/30 to-transparent",
+      labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"]
     },
     {
       name: "Transactions",
-      data: [50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215],
+      data: [5000, 6500, 8000, 9500, 11000, 12500, 14000, 15500, 17000, 18500, 20000, 21500],
       color: "#10B981",
-      gradient: "from-green-500/30 to-transparent"
+      gradient: "from-green-500/30 to-transparent",
+      labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"]
     }
   ];
 
@@ -186,6 +190,46 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     return num.toString();
+  };
+
+  const formatValue = (value: number, chartIndex: number) => {
+    if (chartIndex === 0) return `${formatNumber(value)} UOS`;
+    return formatNumber(value);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<SVGElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    
+    // Convertir les coordonnées écran en coordonnées SVG
+    const svgX = (x / rect.width) * 800;
+    const svgY = (y / rect.height) * 350;
+    
+    // Trouver le point le plus proche
+    const pointWidth = 54;
+    const startX = 100;
+    const pointIndex = Math.round((svgX - startX) / pointWidth);
+    
+    if (pointIndex >= 0 && pointIndex < currentData.data.length) {
+      const value = currentData.data[pointIndex];
+      const pointX = startX + pointIndex * pointWidth;
+      const pointY = 285 - (value / Math.max(...currentData.data)) * 225;
+      
+      // Vérifier si on survole vraiment près du point
+      const distance = Math.sqrt(Math.pow(svgX - pointX, 2) + Math.pow(svgY - pointY, 2));
+      
+      if (distance < 25) {
+        setHoveredPoint({
+          index: pointIndex,
+          value: value,
+          x: pointX,
+          y: pointY
+        });
+      } else {
+        setHoveredPoint(null);
+      }
+    }
   };
 
   return (
@@ -248,7 +292,7 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
                 <div className="relative">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-12 h-12 ${metric.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                      <IconComponent className={`w-6 h-6 bg-gradient-to-r ${metric.color} bg-clip-text text-transparent`} />
+                      <IconComponent className="w-6 h-6 text-white" />
                     </div>
                     <div className={`flex items-center text-sm ${
                       metric.trend === 'up' ? 'text-green-400' : 'text-red-400'
@@ -279,35 +323,49 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
           })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* Graphique principal */}
-          <div className="lg:col-span-2 bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-[#7A52D1]/20">
+        <div className="mb-16">
+          {/* Graphique principal agrandi */}
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-[#7A52D1]/20">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-3xl font-bold text-white mb-2">
                   Évolution {currentData.name}
                 </h3>
-                <p className="text-gray-400">Données des 12 derniers mois</p>
+                <p className="text-gray-400">Données des 12 derniers mois - Cliquez sur les indicateurs pour changer de graphique</p>
               </div>
               
-              {/* Indicateurs de graphiques */}
-              <div className="flex space-x-2">
-                {chartData.map((_, index) => (
-                  <div
+              {/* Indicateurs de graphiques cliquables */}
+              <div className="flex space-x-3">
+                {chartData.map((chart, index) => (
+                  <button
                     key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    onClick={() => setCurrentChart(index)}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 border ${
                       currentChart === index 
-                        ? 'bg-[#7A52D1] scale-125' 
-                        : 'bg-gray-600 hover:bg-gray-500'
+                        ? 'bg-[#7A52D1] border-[#7A52D1] text-white scale-105' 
+                        : 'bg-gray-800/50 border-gray-600 text-gray-400 hover:border-[#7A52D1] hover:text-white'
                     }`}
-                  />
+                  >
+                    <div 
+                      className={`w-3 h-3 rounded-full ${
+                        currentChart === index ? 'bg-white' : ''
+                      }`}
+                      style={{ backgroundColor: currentChart === index ? 'white' : chart.color }}
+                    ></div>
+                    <span className="text-sm font-medium">{chart.name}</span>
+                  </button>
                 ))}
               </div>
             </div>
 
-            {/* Graphique SVG */}
-            <div className="relative h-64">
-              <svg className="w-full h-full" viewBox="0 0 600 200">
+            {/* Graphique SVG Interactif */}
+            <div className="relative h-96">
+              <svg 
+                className="w-full h-full cursor-crosshair" 
+                viewBox="0 0 800 350"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={() => setHoveredPoint(null)}
+              >
                 <defs>
                   <linearGradient id={`gradient-${currentChart}`} x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stopColor={currentData.color} stopOpacity="0.3"/>
@@ -315,123 +373,239 @@ const StatisticsSection = ({ onNavigate }: StatisticsSectionProps) => {
                   </linearGradient>
                 </defs>
 
-                {/* Grille */}
+                {/* Grille horizontale */}
                 {[...Array(6)].map((_, i) => (
-                  <line
-                    key={i}
-                    x1="50"
-                    y1={30 + i * 28}
-                    x2="550"
-                    y2={30 + i * 28}
-                    stroke="#374151"
-                    strokeWidth="1"
-                    opacity="0.3"
-                  />
+                  <g key={i}>
+                    <line
+                      x1="100"
+                      y1={60 + i * 45}
+                      x2="750"
+                      y2={60 + i * 45}
+                      stroke="#374151"
+                      strokeWidth="1"
+                      opacity="0.3"
+                    />
+                    {/* Labels axe Y */}
+                    <text
+                      x="90"
+                      y={65 + i * 45}
+                      fill="#9CA3AF"
+                      fontSize="14"
+                      textAnchor="end"
+                    >
+                      {formatNumber(Math.max(...currentData.data) * (1 - i * 0.2))}
+                    </text>
+                  </g>
                 ))}
 
-                {/* Ligne de données */}
-                <path
-                  d={`M ${currentData.data.map((value, index) => 
-                    `${50 + (index * 45)} ${190 - (value / Math.max(...currentData.data)) * 140}`
-                  ).join(' L ')}`}
-                  stroke={currentData.color}
-                  strokeWidth="3"
-                  fill="none"
-                  className="drop-shadow-lg"
-                />
+                {/* Grille verticale et labels axe X */}
+                {currentData.labels.map((label, index) => (
+                  <g key={index}>
+                    <line
+                      x1={100 + index * 54}
+                      y1="60"
+                      x2={100 + index * 54}
+                      y2="285"
+                      stroke="#374151"
+                      strokeWidth="1"
+                      opacity="0.2"
+                    />
+                    <text
+                      x={100 + index * 54}
+                      y="310"
+                      fill="#9CA3AF"
+                      fontSize="13"
+                      textAnchor="middle"
+                    >
+                      {label}
+                    </text>
+                  </g>
+                ))}
 
                 {/* Zone sous la courbe */}
                 <path
                   d={`M ${currentData.data.map((value, index) => 
-                    `${50 + (index * 45)} ${190 - (value / Math.max(...currentData.data)) * 140}`
-                  ).join(' L ')} L 545 190 L 50 190 Z`}
+                    `${100 + (index * 54)} ${285 - (value / Math.max(...currentData.data)) * 225}`
+                  ).join(' L ')} L 694 285 L 100 285 Z`}
                   fill={`url(#gradient-${currentChart})`}
                 />
 
+                {/* Ligne de données */}
+                <path
+                  d={`M ${currentData.data.map((value, index) => 
+                    `${100 + (index * 54)} ${285 - (value / Math.max(...currentData.data)) * 225}`
+                  ).join(' L ')}`}
+                  stroke={currentData.color}
+                  strokeWidth="4"
+                  fill="none"
+                  className="drop-shadow-lg"
+                />
+
                 {/* Points de données */}
-                {currentData.data.map((value, index) => (
-                  <circle
-                    key={index}
-                    cx={50 + index * 45}
-                    cy={190 - (value / Math.max(...currentData.data)) * 140}
-                    r="4"
-                    fill={currentData.color}
-                    className="drop-shadow-md"
-                  />
-                ))}
+                {currentData.data.map((value, index) => {
+                  const cx = 100 + index * 54;
+                  const cy = 285 - (value / Math.max(...currentData.data)) * 225;
+                  const isHovered = hoveredPoint?.index === index;
+                  
+                  return (
+                    <circle
+                      key={index}
+                      cx={cx}
+                      cy={cy}
+                      r={isHovered ? "8" : "5"}
+                      fill={currentData.color}
+                      stroke="white"
+                      strokeWidth={isHovered ? "3" : "2"}
+                      className="drop-shadow-md transition-all duration-200 cursor-pointer"
+                      style={{ filter: isHovered ? 'drop-shadow(0 0 12px rgba(122, 82, 209, 0.8))' : undefined }}
+                    />
+                  );
+                })}
+
+                {/* Tooltip */}
+                {hoveredPoint && (
+                  <g>
+                    {/* Ligne verticale de référence */}
+                    <line
+                      x1={hoveredPoint.x}
+                      y1="60"
+                      x2={hoveredPoint.x}
+                      y2="285"
+                      stroke={currentData.color}
+                      strokeWidth="2"
+                      strokeDasharray="4,4"
+                      opacity="0.6"
+                    />
+                    
+                    {/* Box du tooltip */}
+                    <rect
+                      x={hoveredPoint.x - 60}
+                      y={hoveredPoint.y - 55}
+                      width="120"
+                      height="45"
+                      fill="rgba(0, 0, 0, 0.95)"
+                      stroke={currentData.color}
+                      strokeWidth="2"
+                      rx="8"
+                      className="drop-shadow-xl"
+                    />
+                    
+                    {/* Texte du tooltip */}
+                    <text
+                      x={hoveredPoint.x}
+                      y={hoveredPoint.y - 35}
+                      fill="white"
+                      fontSize="14"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                    >
+                      {formatValue(hoveredPoint.value, currentChart)}
+                    </text>
+                    
+                    <text
+                      x={hoveredPoint.x}
+                      y={hoveredPoint.y - 18}
+                      fill="#9CA3AF"
+                      fontSize="12"
+                      textAnchor="middle"
+                    >
+                      {currentData.labels[hoveredPoint.index]}
+                    </text>
+                  </g>
+                )}
               </svg>
               
               {/* Valeur actuelle */}
               <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm rounded-xl p-3 border border-[#7A52D1]/20">
                 <div className="text-2xl font-bold text-white">
-                  {formatNumber(currentData.data[currentData.data.length - 1])}
+                  {formatValue(currentData.data[currentData.data.length - 1], currentChart)}
                 </div>
                 <div className="text-sm text-gray-400">Actuel</div>
               </div>
+
+              {/* Légende interactive */}
+              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm rounded-xl p-3 border border-[#7A52D1]/20">
+                <div className="text-sm text-gray-400 mb-1">Survolez les points pour plus de détails</div>
+                <div className="flex items-center space-x-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{ backgroundColor: currentData.color }}
+                  ></div>
+                  <span className="text-white text-sm font-medium">{currentData.name}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Statistiques réseau et collections côte à côte */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          {/* Statistiques réseau */}
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-[#7A52D1]/20">
+            <h3 className="text-xl font-bold text-white mb-6">État du Réseau</h3>
+              
+            <div className="space-y-4">
+              {networkStats.map((stat, index) => {
+                const IconComponent = stat.icon;
+                return (
+                  <div key={index} className="flex items-center space-x-4 p-3 bg-gray-800/30 rounded-xl hover:bg-gray-800/50 transition-colors">
+                    <div className="w-10 h-10 bg-gray-700/50 rounded-xl flex items-center justify-center">
+                      <IconComponent className={`w-5 h-5 ${stat.color}`} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-medium">{stat.title}</span>
+                        <span className={`font-bold ${stat.color}`}>{stat.value}</span>
+                      </div>
+                      <div className="text-gray-400 text-sm">{stat.subtitle}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Statistiques réseau */}
-          <div className="space-y-6">
-            <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-[#7A52D1]/20">
-              <h3 className="text-xl font-bold text-white mb-6">État du Réseau</h3>
-              
-              <div className="space-y-4">
-                {networkStats.map((stat, index) => {
-                  const IconComponent = stat.icon;
-                  return (
-                    <div key={index} className="flex items-center space-x-4 p-3 bg-gray-800/30 rounded-xl hover:bg-gray-800/50 transition-colors">
-                      <div className="w-10 h-10 bg-gray-700/50 rounded-xl flex items-center justify-center">
-                        <IconComponent className={`w-5 h-5 ${stat.color}`} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-white font-medium">{stat.title}</span>
-                          <span className={`font-bold ${stat.color}`}>{stat.value}</span>
-                        </div>
-                        <div className="text-gray-400 text-sm">{stat.subtitle}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* Collections populaires */}
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-[#7A52D1]/20">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-white">Top Collections</h3>
+              <button 
+                onClick={() => onNavigate?.('statistics')}
+                className="text-[#7A52D1] hover:text-[#6A42C1] text-sm font-medium flex items-center space-x-1"
+              >
+                <span>Voir tout</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
-
-            {/* Collections populaires */}
-            <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-[#7A52D1]/20">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Top Collections</h3>
-                <button 
-                  onClick={() => onNavigate?.('statistics')}
-                  className="text-[#7A52D1] hover:text-[#6A42C1] text-sm font-medium flex items-center space-x-1"
-                >
-                  <span>Voir tout</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-              
-              <div className="space-y-3">
-                {[
-                  { name: "Ultra's Power", volume: "456K", change: "+15.3%" },
-                  { name: "Cosmic Warriors", volume: "234K", change: "+8.7%" },
-                  { name: "Digital Legends", volume: "189K", change: "+23.1%" }
-                ].map((collection, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-800/30 rounded-xl hover:bg-gray-800/50 transition-colors cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-[#7A52D1] to-violet-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <div className="text-white font-medium text-sm">{collection.name}</div>
-                        <div className="text-gray-400 text-xs">{collection.volume} UOS</div>
-                      </div>
+            
+            <div className="space-y-3">
+              {[
+                { name: "Ashes Genesis", volume: "567K", change: "+28.9%", image: "/collections/ashes.png" },
+                { name: "Phygital Artifacts", volume: "456K", change: "+32.6%", image: "/collections/phygital.png" },
+                { name: "Cypherpunk Revolution", volume: "345K", change: "+25.3%", image: "/collections/cypherpunk.jpg" },
+                { name: "Ultra Apes Collection", volume: "283K", change: "+23.4%", image: "/collections/ultra-apes.jpeg" },
+                { name: "Ultra Power", volume: "254K", change: "+15.2%", image: "/collections/ultra-power.png" },
+              ].map((collection, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-800/30 rounded-xl hover:bg-gray-800/50 transition-colors cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#7A52D1] to-violet-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">
+                      {index + 1}
                     </div>
-                    <div className="text-green-400 text-sm font-medium">
-                      {collection.change}
+                    <img 
+                      src={collection.image} 
+                      alt={collection.name}
+                      className="w-8 h-8 rounded-lg object-cover"
+                    />
+                    <div>
+                      <div className="text-white font-medium text-sm">{collection.name}</div>
+                      <div className="text-gray-400 text-xs">{collection.volume} UOS</div>
                     </div>
                   </div>
-                ))}
-              </div>
+                  <div className="text-green-400 text-sm font-medium">
+                    {collection.change}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

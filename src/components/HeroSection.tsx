@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Zap, Play } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface HeroSectionProps {
   onNavigate?: (page: string) => void;
 }
 
 const HeroSection = ({ onNavigate }: HeroSectionProps) => {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -19,23 +21,23 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
 
   const heroSlides = [
     {
-      title: "Découvrez l'Univers",
-      subtitle: "Ultra UNIQ",
-      description: "La première marketplace UNIQ sur blockchain Ultra avec des expériences gaming révolutionnaires",
+      title: t('home.hero.slide1.title'),
+      subtitle: t('home.hero.slide1.subtitle'),
+      description: t('home.hero.slide1.description'),
       image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920&h=1080&fit=crop&q=80",
       stats: { collections: "10K+", volume: "50M UOS", users: "100K+" }
     },
     {
-      title: "Collectionnez",
-      subtitle: "l'Extraordinaire",
-      description: "Des UNIQs gaming uniques, des collections exclusives et des expériences immersives",
+      title: t('home.hero.slide2.title'),
+      subtitle: t('home.hero.slide2.subtitle'),
+      description: t('home.hero.slide2.description'),
       image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=1920&h=1080&fit=crop&q=80",
       stats: { collections: "500+", volume: "25M UOS", users: "50K+" }
     },
     {
-      title: "Tradez avec",
-      subtitle: "Confiance",
-      description: "Marketplace sécurisée, transactions instantanées et communauté active",
+      title: t('home.hero.slide3.title'),
+      subtitle: t('home.hero.slide3.subtitle'),
+      description: t('home.hero.slide3.description'),
       image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop&q=80",
       stats: { collections: "1K+", volume: "100M UOS", users: "200K+" }
     }
@@ -141,19 +143,19 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
                   {currentHero.stats.collections}
                 </div>
-                <div className="text-sm text-gray-300 uppercase tracking-wide">Collections</div>
+                <div className="text-sm text-gray-300 uppercase tracking-wide">{t('home.hero.stats.collections')}</div>
               </div>
               <div className="text-center bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-[#7A52D1]/20">
                 <div className="text-3xl md:text-4xl font-bold text-[#7A52D1] mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
                   {currentHero.stats.volume}
                 </div>
-                <div className="text-sm text-gray-300 uppercase tracking-wide">Volume Total</div>
+                <div className="text-sm text-gray-300 uppercase tracking-wide">{t('home.hero.stats.volume')}</div>
               </div>
               <div className="text-center bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
                   {currentHero.stats.users}
                 </div>
-                <div className="text-sm text-gray-300 uppercase tracking-wide">Utilisateurs</div>
+                <div className="text-sm text-gray-300 uppercase tracking-wide">{t('home.hero.stats.users')}</div>
               </div>
             </div>
 
@@ -166,7 +168,7 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
                 className="group relative bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/40 hover:shadow-[#7A52D1]/60 border border-[#7A52D1]/30"
               >
                 <span className="relative z-10 flex items-center space-x-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                  <span>Explorer la Marketplace</span>
+                  <span>{t('home.hero.exploreMarketplace')}</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -177,7 +179,7 @@ const HeroSection = ({ onNavigate }: HeroSectionProps) => {
                 className="group flex items-center space-x-2 bg-black/60 backdrop-blur-md border border-white/30 hover:bg-black/70 hover:border-white/40 text-white font-medium py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
               >
                 <Play className="w-5 h-5" />
-                <span style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>Voir les Collections</span>
+                <span style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{t('home.hero.viewCollections')}</span>
               </button>
             </div>
 

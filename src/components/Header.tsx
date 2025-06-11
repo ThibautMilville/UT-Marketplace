@@ -7,9 +7,12 @@ import { useState, useEffect, useRef } from 'react';
 interface HeaderProps {
   onNavigate: (page: string) => void;
   currentPage: string;
+  selectedUniq?: any;
+  selectedCollection?: any;
+  selectedCreator?: any;
 }
 
-const Header = ({ onNavigate, currentPage }: HeaderProps) => {
+const Header = ({ onNavigate, currentPage, selectedUniq, selectedCollection, selectedCreator }: HeaderProps) => {
   const {
     blockchainId,
     isConnected,
@@ -154,9 +157,33 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
             <button onClick={() => onNavigate('collections')} className={linkClass}>Collections</button>
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
-            <button onClick={() => onNavigate('collection-detail')} className={linkClass}>Ultra Genesis</button>
+            <button 
+              onClick={() => {
+                if (selectedUniq) {
+                  // Créer un objet collection basique depuis les données de l'UNIQ
+                  const collectionData = {
+                    name: selectedUniq.collection,
+                    description: `Collection ${selectedUniq.collection}`,
+                    image: selectedUniq.image,
+                    banner: selectedUniq.image,
+                    creator: selectedUniq.creator || 'Créateur',
+                    totalItems: 15,
+                    items: 15,
+                    owners: 10,
+                    floorPrice: 100,
+                    volume: 1000,
+                    volumeChange: 5,
+                    verified: true
+                  };
+                  onNavigate('collection-detail', collectionData);
+                }
+              }} 
+              className={linkClass}
+            >
+              {selectedUniq?.collection || 'Collection'}
+            </button>
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
-            <span className={currentClass}>NFT #3847</span>
+            <span className={currentClass}>{selectedUniq?.name || 'UNIQ'}</span>
           </div>
         );
       case 'collection-detail':
@@ -166,7 +193,7 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
             <button onClick={() => onNavigate('collections')} className={linkClass}>Collections</button>
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
-            <span className={currentClass}>Collection</span>
+            <span className={currentClass}>{selectedCollection?.name || 'Collection'}</span>
           </div>
         );
       case 'transactions':
@@ -199,6 +226,16 @@ const Header = ({ onNavigate, currentPage }: HeaderProps) => {
             <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
             <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
             <span className={currentClass}>Statistiques</span>
+          </div>
+        );
+      case 'creator':
+        return (
+          <div className={breadcrumbClass}>
+            <button onClick={() => onNavigate('home')} className={linkClass}>Accueil</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <button onClick={() => onNavigate('marketplace')} className={linkClass}>Marketplace</button>
+            <ChevronRight className={`w-4 h-4 ${separatorClass}`} />
+            <span className={currentClass}>{selectedCreator?.displayName || selectedCreator?.name || 'Créateur'}</span>
           </div>
         );
       default:

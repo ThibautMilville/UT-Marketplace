@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Star, TrendingUp, Users, Eye, ArrowRight, Zap } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface CollectionsSectionProps {
   onNavigate?: (page: string, data?: any) => void;
 }
 
 const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
+  const { t } = useTranslation();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
   useEffect(() => {
@@ -29,100 +31,100 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
 
   const collections = [
     {
-      title: "Ultra Genesis",
+      title: "Ultra Apes Collection",
       subtitle: "Collection Exclusive",
-      description: "Les premiers NFTs Ultra avec des utilitaires gaming uniques",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop&q=80",
+      description: "Collection exclusive d'apes Ultra avec des traits uniques et des pouvoirs spéciaux",
+      image: "/collections/ultra-apes.jpeg",
       gradient: "from-[#7A52D1]/30 to-blue-500/30",
       stats: {
-        floor: "245.5 UOS",
-        volume: "1.2M UOS",
-        owners: "3.4K",
-        items: "10K"
+        floor: "125.5 UOS",
+        volume: "45.8K UOS",
+        owners: "12",
+        items: "15"
       },
       verified: true,
       trending: true,
       rarity: "Legendary"
     },
     {
-      title: "Cosmic Warriors",
-      subtitle: "Gaming Collection",
-      description: "Guerriers cosmiques avec pouvoirs spéciaux dans l'écosystème Ultra",
-      image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=600&h=400&fit=crop&q=80",
+      title: "Cypherpunk Revolution",
+      subtitle: "Art Collection",
+      description: "Hackers et rebelles du monde numérique pour les défenseurs de la vie privée",
+      image: "/collections/cypherpunk.jpg",
       gradient: "from-purple-500/30 to-pink-500/30",
       stats: {
-        floor: "89.2 UOS",
-        volume: "856K UOS",
-        owners: "2.1K",
-        items: "5K"
-      },
-      verified: true,
-      trending: false,
-      rarity: "Epic"
-    },
-    {
-      title: "Digital Legends",
-      subtitle: "Art Collection",
-      description: "Œuvres d'art numériques créées par les meilleurs artistes Ultra",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop&q=80",
-      gradient: "from-yellow-500/30 to-orange-500/30",
-      stats: {
-        floor: "156.8 UOS",
-        volume: "2.1M UOS",
-        owners: "4.7K",
-        items: "7.5K"
-      },
-      verified: true,
-      trending: true,
-      rarity: "Rare"
-    },
-    {
-      title: "Mystic Creatures",
-      subtitle: "Fantasy Collection",
-      description: "Créatures mystiques avec des capacités magiques uniques",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop&q=80",
-      gradient: "from-green-500/30 to-teal-500/30",
-      stats: {
-        floor: "43.9 UOS",
-        volume: "634K UOS",
-        owners: "1.8K",
-        items: "15K"
-      },
-      verified: false,
-      trending: false,
-      rarity: "Common"
-    },
-    {
-      title: "Cyber Punks Elite",
-      subtitle: "Futuristic Collection",
-      description: "Personnages cyberpunk avec technologies avancées",
-      image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=600&h=400&fit=crop&q=80",
-      gradient: "from-cyan-500/30 to-blue-500/30",
-      stats: {
-        floor: "198.4 UOS",
-        volume: "1.8M UOS",
-        owners: "2.9K",
-        items: "3K"
-      },
-      verified: true,
-      trending: true,
-      rarity: "Legendary"
-    },
-    {
-      title: "Ultra Racers",
-      subtitle: "Racing Collection",
-      description: "Véhicules de course futuristes pour les compétitions Ultra",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop&q=80",
-      gradient: "from-red-500/30 to-orange-500/30",
-      stats: {
-        floor: "312.7 UOS",
-        volume: "3.2M UOS",
-        owners: "1.2K",
-        items: "2K"
+        floor: "234.8 UOS",
+        volume: "67.9K UOS",
+        owners: "9",
+        items: "15"
       },
       verified: true,
       trending: true,
       rarity: "Mythic"
+    },
+    {
+      title: "Phygital Artifacts",
+      subtitle: "Collectibles",
+      description: "Artefacts physiques et numériques fusionnés, l'avenir de la collection",
+      image: "/collections/phygital.png",
+      gradient: "from-yellow-500/30 to-orange-500/30",
+      stats: {
+        floor: "298.9 UOS",
+        volume: "89.5K UOS",
+        owners: "11",
+        items: "15"
+      },
+      verified: true,
+      trending: true,
+      rarity: "Mythic"
+    },
+    {
+      title: "Ashes Genesis",
+      subtitle: "Gaming Collection",
+      description: "Première collection Ashes avec des designs légendaires dans un univers post-apocalyptique",
+      image: "/collections/ashes.png",
+      gradient: "from-green-500/30 to-teal-500/30",
+      stats: {
+        floor: "456.8 UOS",
+        volume: "123.4K UOS",
+        owners: "13",
+        items: "15"
+      },
+      verified: true,
+      trending: true,
+      rarity: "Mythic"
+    },
+    {
+      title: "Freedom Gamers Elite",
+      subtitle: "Gaming Collection",
+      description: "Guerriers de la liberté numérique avec équipements tactiques avancés",
+      image: "/collections/freedom-gamers.png",
+      gradient: "from-cyan-500/30 to-blue-500/30",
+      stats: {
+        floor: "167.2 UOS",
+        volume: "35.4K UOS",
+        owners: "8",
+        items: "15"
+      },
+      verified: true,
+      trending: false,
+      rarity: "Legendary"
+    },
+    {
+      title: "Ultra Boat Adventures",
+      subtitle: "Gaming Collection",
+      description: "Navires d'exploration pour les océans virtuels d'Ultra avec capacités uniques",
+      image: "/collections/ultra-boat.jpeg",
+      gradient: "from-red-500/30 to-orange-500/30",
+      stats: {
+        floor: "89.8 UOS",
+        volume: "29.0K UOS",
+        owners: "10",
+        items: "15"
+      },
+      verified: true,
+      trending: true,
+      rarity: "Epic"
     }
   ];
 
@@ -153,20 +155,20 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-[#7A52D1]/20 backdrop-blur-sm border border-[#7A52D1]/30 rounded-full px-4 py-2 mb-6">
             <Star className="w-4 h-4 text-[#7A52D1]" />
-            <span className="text-sm text-white font-medium">Collections Tendances</span>
+            <span className="text-sm text-white font-medium">{t('home.trending.live')}</span>
           </div>
           
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-              Collections
+              {t('home.collections.title').split(' ')[0]}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
-              Exclusives
+              {t('home.collections.title').split(' ')[1]}
             </span>
           </h2>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Découvrez les collections NFT les plus populaires sur Ultra, créées par des artistes et développeurs de renommée mondiale
+            {t('home.collections.subtitle')}
           </p>
         </div>
 
@@ -190,7 +192,6 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
                   alt={collection.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className={`absolute inset-0 bg-gradient-to-t ${collection.gradient} group-hover:opacity-80 transition-opacity duration-300`}></div>
                 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex items-center space-x-2">
@@ -228,20 +229,24 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
                           description: collection.description,
                           image: collection.image,
                           banner: collection.image,
-                          creator: collection.subtitle === "Collection Exclusive" ? "UltraTeam" : "UltraCreator",
+                          creator: collection.subtitle === "Collection Exclusive" ? "UltraStudio" : 
+                                  collection.subtitle === "Art Collection" ? "CryptoRebels" :
+                                  collection.subtitle === "Collectibles" ? "PhygitalLab" :
+                                  collection.subtitle === "Gaming Collection" ? "GameForge" : "UltraCreator",
                           verified: collection.verified,
-                          totalItems: parseInt(collection.stats.items.replace('K', '000')),
-                          items: parseInt(collection.stats.items.replace('K', '000')),
-                          owners: parseInt(collection.stats.owners.replace('K', '000')),
+                          totalItems: parseInt(collection.stats.items),
+                          items: parseInt(collection.stats.items),
+                          owners: parseInt(collection.stats.owners),
                           floorPrice: parseFloat(collection.stats.floor.replace(' UOS', '')),
-                          volume: parseFloat(collection.stats.volume.replace('M UOS', '').replace('K UOS', '')) * (collection.stats.volume.includes('M') ? 1000000 : 1000),
+                          volume: parseFloat(collection.stats.volume.replace('K UOS', '')) * 1000,
                           volumeChange: Math.random() * 20 - 10, // Random change for demo
                           category: collection.subtitle,
                           featured: true,
                           rarity: collection.rarity,
                           trending: collection.trending,
                           likes: Math.floor(Math.random() * 10000),
-                          views: Math.floor(Math.random() * 50000)
+                          views: Math.floor(Math.random() * 50000),
+                          change24h: Math.random() * 20 - 10
                         };
                         onNavigate('collection-detail', adaptedCollection);
                       }
@@ -293,20 +298,24 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
                         description: collection.description,
                         image: collection.image,
                         banner: collection.image,
-                        creator: collection.subtitle === "Collection Exclusive" ? "UltraTeam" : "UltraCreator",
+                        creator: collection.subtitle === "Collection Exclusive" ? "UltraStudio" : 
+                                collection.subtitle === "Art Collection" ? "CryptoRebels" :
+                                collection.subtitle === "Collectibles" ? "PhygitalLab" :
+                                collection.subtitle === "Gaming Collection" ? "GameForge" : "UltraCreator",
                         verified: collection.verified,
-                        totalItems: parseInt(collection.stats.items.replace('K', '000')),
-                        items: parseInt(collection.stats.items.replace('K', '000')),
-                        owners: parseInt(collection.stats.owners.replace('K', '000')),
+                        totalItems: parseInt(collection.stats.items),
+                        items: parseInt(collection.stats.items),
+                        owners: parseInt(collection.stats.owners),
                         floorPrice: parseFloat(collection.stats.floor.replace(' UOS', '')),
-                        volume: parseFloat(collection.stats.volume.replace('M UOS', '').replace('K UOS', '')) * (collection.stats.volume.includes('M') ? 1000000 : 1000),
+                        volume: parseFloat(collection.stats.volume.replace('K UOS', '')) * 1000,
                         volumeChange: Math.random() * 20 - 10, // Random change for demo
                         category: collection.subtitle,
                         featured: true,
                         rarity: collection.rarity,
                         trending: collection.trending,
                         likes: Math.floor(Math.random() * 10000),
-                        views: Math.floor(Math.random() * 50000)
+                        views: Math.floor(Math.random() * 50000),
+                        change24h: Math.random() * 20 - 10
                       };
                       onNavigate('collection-detail', adaptedCollection);
                     }
@@ -331,7 +340,7 @@ const CollectionsSection = ({ onNavigate }: CollectionsSectionProps) => {
             className="group bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/30 hover:shadow-[#7A52D1]/50 border border-[#7A52D1]/30"
           >
             <span className="flex items-center space-x-2">
-              <span>Voir Toutes les Collections</span>
+              <span>{t('home.collections.viewAll')}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>

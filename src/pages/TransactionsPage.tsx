@@ -45,14 +45,14 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
       id: '1',
       type: 'purchase',
       item: {
-        name: 'Ultra Power #3847',
-      collection: "Ultra's Power Collection",
-        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop',
-        uniqId: '3847',
-        serialNumber: '28/100'
+        name: 'Ashes Genesis #0001',
+        collection: "Ashes Genesis",
+        image: '/collections/ashes.png',
+        uniqId: '0001',
+        serialNumber: '1/15'
       },
-      price: { amount: 245.50, currency: 'UOS', usd: 2455 },
-      participants: { from: 'ultramarket', to: 'cryptoking92' },
+      price: { amount: 456.80, currency: 'UOS', usd: 5481 },
+      participants: { from: 'ashesmarket', to: 'cryptoking92' },
       timestamp: '2024-01-15T14:30:00Z',
       txHash: '0x1a2b3c4d5e6f7890abcdef1234567890abcdef12',
       status: 'completed'
@@ -61,14 +61,14 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
       id: '2',
       type: 'sale',
       item: {
-        name: 'Cosmic Warrior #1205',
-        collection: 'Cosmic Warriors',
-        image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop',
-        uniqId: '1205',
-        serialNumber: '67/500'
+        name: 'Phygital Artifact #0007',
+        collection: 'Phygital Artifacts',
+        image: '/collections/phygital.png',
+        uniqId: '0007',
+        serialNumber: '7/15'
       },
-      price: { amount: 189.20, currency: 'UOS', usd: 1892 },
-      participants: { from: 'spaceexplorer', to: 'nftcollector' },
+      price: { amount: 298.90, currency: 'UOS', usd: 3587 },
+      participants: { from: 'phygitalhunter', to: 'nftcollector' },
       timestamp: '2024-01-15T13:45:00Z',
       txHash: '0x2b3c4d5e6f7890abcdef1a',
       status: 'completed'
@@ -77,14 +77,14 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
       id: '3',
       type: 'transfer',
       item: {
-        name: 'Digital Legend #892',
-        collection: 'Digital Legends',
-        image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop',
-        uniqId: '892',
-        serialNumber: '12/750'
+        name: 'Cypherpunk Revolutionary #0012',
+        collection: 'Cypherpunk Revolution',
+        image: '/collections/cypherpunk.jpg',
+        uniqId: '0012',
+        serialNumber: '12/15'
       },
       price: { amount: 0, currency: 'UOS', usd: 0 },
-      participants: { from: 'legendhunter', to: 'gamermaster' },
+      participants: { from: 'cryptorebel', to: 'cyberpunk_fan' },
       timestamp: '2024-01-15T12:20:00Z',
       txHash: '0x3c4d5e6f7890abcdef1a2b',
       status: 'completed'
@@ -93,14 +93,14 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
       id: '4',
       type: 'listing',
       item: {
-        name: 'Cyber Punk #4561',
-        collection: 'Cyber Punks Elite',
-        image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop',
-        uniqId: '4561',
-        serialNumber: '89/300'
+        name: 'Ultra Apes Elite #0008',
+        collection: 'Ultra Apes Collection',
+        image: '/collections/ultra-apes.jpeg',
+        uniqId: '0008',
+        serialNumber: '8/15'
       },
-      price: { amount: 320.00, currency: 'UOS', usd: 3200 },
-      participants: { from: 'cybercollector', to: 'marketplace' },
+      price: { amount: 125.50, currency: 'UOS', usd: 1506 },
+      participants: { from: 'apemaster', to: 'marketplace' },
       timestamp: '2024-01-15T11:15:00Z',
       txHash: '0x4d5e6f7890abcdef1a2b3c',
       status: 'pending'
@@ -109,16 +109,176 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
       id: '5',
       type: 'mint',
       item: {
-        name: 'Mystic Creature #2398',
-        collection: 'Mystic Creatures',
-        image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop',
-        uniqId: '2398',
-        serialNumber: '1/1000'
+        name: 'Ultra Power Core #0003',
+        collection: 'Ultra Power Core',
+        image: '/collections/ultra-power.png',
+        uniqId: '0003',
+        serialNumber: '3/15'
       },
-      price: { amount: 50.00, currency: 'UOS', usd: 500 },
-      participants: { from: 'mysticarts', to: 'fantasyfan' },
+      price: { amount: 189.30, currency: 'UOS', usd: 2272 },
+      participants: { from: 'powerlabs', to: 'energyfan' },
       timestamp: '2024-01-15T10:00:00Z',
       txHash: '0x5e6f7890abcdef1a2b3c4d',
+      status: 'completed'
+    },
+    {
+      id: '6',
+      type: 'purchase',
+      item: {
+        name: 'Ashes Revolution #0005',
+        collection: 'Ashes Revolution',
+        image: '/collections/ashes-3.png',
+        uniqId: '0005',
+        serialNumber: '5/15'
+      },
+      price: { amount: 567.20, currency: 'UOS', usd: 6806 },
+      participants: { from: 'ashesrevolution', to: 'revolution_fan' },
+      timestamp: '2024-01-15T09:30:00Z',
+      txHash: '0x6f7890abcdef1a2b3c4d5e',
+      status: 'completed'
+    },
+    {
+      id: '7',
+      type: 'sale',
+      item: {
+        name: 'Ashes Apex #0002',
+        collection: 'Ashes Apex',
+        image: '/collections/ahes-4.png',
+        uniqId: '0002',
+        serialNumber: '2/15'
+      },
+      price: { amount: 634.80, currency: 'UOS', usd: 7618 },
+      participants: { from: 'apexholder', to: 'apex_collector' },
+      timestamp: '2024-01-15T08:45:00Z',
+      txHash: '0x7890abcdef1a2b3c4d5e6f',
+      status: 'completed'
+    },
+    {
+      id: '8',
+      type: 'transfer',
+      item: {
+        name: 'Ashes Uprising #0011',
+        collection: 'Ashes Uprising',
+        image: '/collections/ashes-2.png',
+        uniqId: '0011',
+        serialNumber: '11/15'
+      },
+      price: { amount: 0, currency: 'UOS', usd: 0 },
+      participants: { from: 'uprising_owner', to: 'ashes_enthusiast' },
+      timestamp: '2024-01-15T07:20:00Z',
+      txHash: '0x890abcdef1a2b3c4d5e6f7',
+      status: 'completed'
+    },
+    {
+      id: '9',
+      type: 'listing',
+      item: {
+        name: 'Freedom Gamer #0009',
+        collection: 'Freedom Gamers',
+        image: '/collections/freedom-gamers.png',
+        uniqId: '0009',
+        serialNumber: '9/15'
+      },
+      price: { amount: 87.50, currency: 'UOS', usd: 1050 },
+      participants: { from: 'gamer_freedom', to: 'marketplace' },
+      timestamp: '2024-01-15T06:15:00Z',
+      txHash: '0x90abcdef1a2b3c4d5e6f78',
+      status: 'pending'
+    },
+    {
+      id: '10',
+      type: 'mint',
+      item: {
+        name: 'The Counsellor #0001',
+        collection: 'The Counsellor',
+        image: '/collections/counsellor.png',
+        uniqId: '0001',
+        serialNumber: '1/15'
+      },
+      price: { amount: 234.90, currency: 'UOS', usd: 2819 },
+      participants: { from: 'counsellor_studio', to: 'wisdom_seeker' },
+      timestamp: '2024-01-15T05:00:00Z',
+      txHash: '0x0abcdef1a2b3c4d5e6f789',
+      status: 'completed'
+    },
+    {
+      id: '11',
+      type: 'purchase',
+      item: {
+        name: 'Ultra Boat Elite #0001',
+        collection: 'Ultra Boat Collection',
+        image: '/collections/ultra-boat.jpeg',
+        uniqId: '0001',
+        serialNumber: '1/15'
+      },
+      price: { amount: 345.90, currency: 'UOS', usd: 4151 },
+      participants: { from: 'marina_master', to: 'sea_explorer' },
+      timestamp: '2024-01-15T04:30:00Z',
+      txHash: '0xabcdef1a2b3c4d5e6f7890',
+      status: 'completed'
+    },
+    {
+      id: '12',
+      type: 'sale',
+      item: {
+        name: 'Ultra Fashion Elite #0001',
+        collection: 'Ultra Clothes Collection',
+        image: '/collections/ultra-clothes-1.png',
+        uniqId: '0001',
+        serialNumber: '1/15'
+      },
+      price: { amount: 198.30, currency: 'UOS', usd: 2380 },
+      participants: { from: 'fashion_icon', to: 'style_collector' },
+      timestamp: '2024-01-15T03:45:00Z',
+      txHash: '0xbcdef1a2b3c4d5e6f78901',
+      status: 'completed'
+    },
+    {
+      id: '13',
+      type: 'listing',
+      item: {
+        name: 'Ashes Revolution #0008',
+        collection: 'Ashes Revolution',
+        image: '/collections/ashes-3.png',
+        uniqId: '0008',
+        serialNumber: '8/15'
+      },
+      price: { amount: 567.20, currency: 'UOS', usd: 6806 },
+      participants: { from: 'revolution_master', to: 'marketplace' },
+      timestamp: '2024-01-15T02:20:00Z',
+      txHash: '0xcdef1a2b3c4d5e6f789012',
+      status: 'pending'
+    },
+    {
+      id: '14',
+      type: 'mint',
+      item: {
+        name: 'Ashes Uprising #0015',
+        collection: 'Ashes Uprising',
+        image: '/collections/ashes-2.png',
+        uniqId: '0015',
+        serialNumber: '15/15'
+      },
+      price: { amount: 389.50, currency: 'UOS', usd: 4674 },
+      participants: { from: 'ashes_creator', to: 'uprising_fan' },
+      timestamp: '2024-01-15T01:00:00Z',
+      txHash: '0xdef1a2b3c4d5e6f7890123',
+      status: 'completed'
+    },
+    {
+      id: '15',
+      type: 'transfer',
+      item: {
+        name: 'Ashes Apex #0003',
+        collection: 'Ashes Apex',
+        image: '/collections/ahes-4.png',
+        uniqId: '0003',
+        serialNumber: '3/15'
+      },
+      price: { amount: 0, currency: 'UOS', usd: 0 },
+      participants: { from: 'apex_owner', to: 'apex_friend' },
+      timestamp: '2024-01-14T23:30:00Z',
+      txHash: '0xef1a2b3c4d5e6f78901234',
       status: 'completed'
     }
   ]
@@ -232,7 +392,15 @@ const TransactionsPage = ({ onNavigate }: TransactionsPageProps) => {
     <div className="min-h-screen bg-gradient-to-br from-black via-[#7A52D1]/10 to-black text-white">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#7A52D1]/20 via-blue-600/20 to-[#7A52D1]/20"></div>
+        <div className="absolute inset-0">
+          <img 
+            src="/collections/ultra-power.png" 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-15 scale-110 blur-sm"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-[#7A52D1]/50 to-black/85"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50"></div>
+        </div>
         <div className="relative container mx-auto px-6 py-16">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">

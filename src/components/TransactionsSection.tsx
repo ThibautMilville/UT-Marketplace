@@ -14,46 +14,64 @@ import {
   Star,
   Award
 } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface TransactionsSectionProps {
   onNavigate?: (page: string) => void;
 }
 
 const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
+  const { t } = useTranslation();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'marketplace' | 'launchpad'>('marketplace');
   const [filter, setFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
+  // Initialisation et gestion de la visibilité des cartes
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setVisibleCards(prev => [...prev, index]);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    // Afficher immédiatement les cartes initiales
+    const initialTransactions = activeTab === 'marketplace' ? marketplaceTransactions : launchpadTransactions;
+    setVisibleCards(initialTransactions.map((_, index) => index));
+    
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const index = parseInt(entry.target.getAttribute('data-index') || '0');
+              setVisibleCards(prev => {
+                if (!prev.includes(index)) {
+                  return [...prev, index];
+                }
+                return prev;
+              });
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
 
-    const cards = document.querySelectorAll('.transaction-card');
-    cards.forEach(card => observer.observe(card));
+      const cards = document.querySelectorAll('.transaction-card');
+      cards.forEach(card => observer.observe(card));
 
-    return () => observer.disconnect();
+      return () => observer.disconnect();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [activeTab]);
 
   const marketplaceTransactions = [
     {
       id: 1,
-      name: "Ultra Genesis #3847",
-      collection: "Ultra Genesis",
-      description: "Legendary NFT with unique powers",
+      name: "Ashes Genesis #0001",
+      collection: "Ashes Genesis",
+      description: "Premier UNIQ de la collection légendaire Ashes Genesis",
       date: "Il y a 2 minutes",
-      price: "125.5",
-      priceUSD: "2,510",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&h=200&fit=crop&q=80",
-      user: "CryptoMaster",
+      price: "456.8",
+      priceUSD: "5,481",
+      image: "/collections/ashes.png",
+      user: "AshesCollector",
       userAvatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&q=80",
       type: "VENTE",
       rarity: "Legendary",
@@ -62,14 +80,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 2,
-      name: "Cosmic Warrior #1205",
-      collection: "Cosmic Warriors",
-      description: "Epic space warrior with cosmic abilities",
+      name: "Phygital Artifact #0007",
+      collection: "Phygital Artifacts",
+      description: "Artefact phygital unique mêlant réel et virtuel",
       date: "Il y a 5 minutes",
-      price: "89.2",
-      priceUSD: "1,784",
-      image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=200&h=200&fit=crop&q=80",
-      user: "GalaxyHunter",
+      price: "298.9",
+      priceUSD: "3,587",
+      image: "/collections/phygital.png",
+      user: "PhygitalHunter",
       userAvatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&q=80",
       type: "ACHAT",
       rarity: "Epic",
@@ -78,14 +96,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 3,
-      name: "Digital Legend #892",
-      collection: "Digital Legends",
-      description: "Rare digital artifact from the future",
+      name: "Cypherpunk Revolutionary #0012",
+      collection: "Cypherpunk Revolution",
+      description: "Révolutionnaire cyberpunk de la résistance digitale",
       date: "Il y a 8 minutes",
-      price: "67.8",
-      priceUSD: "1,356",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop&q=80",
-      user: "FutureCollector",
+      price: "234.8",
+      priceUSD: "2,817",
+      image: "/collections/cypherpunk.jpg",
+      user: "CryptoRebel",
       userAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&q=80",
       type: "LISTING",
       rarity: "Rare",
@@ -94,14 +112,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 4,
-      name: "Mystic Creature #2398",
-      collection: "Mystic Creatures",
-      description: "Mystical being with ancient powers",
+      name: "Ultra Ape Elite #0008",
+      collection: "Ultra Apes Collection",
+      description: "Singe ultra rare de l'élite de la collection",
       date: "Il y a 12 minutes",
-      price: "45.3",
-      priceUSD: "906",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=200&fit=crop&q=80",
-      user: "MysticSeeker",
+      price: "125.5",
+      priceUSD: "1,506",
+      image: "/collections/ultra-apes.jpeg",
+      user: "ApeMaster",
       userAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&q=80",
       type: "VENTE",
       rarity: "Mythic",
@@ -113,14 +131,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
   const launchpadTransactions = [
     {
       id: 5,
-      name: "Ultra Pioneers #001",
-      collection: "Ultra Pioneers",
-      description: "First edition pioneer NFT",
+      name: "Ultra Power Core #0003",
+      collection: "Ultra Power Core",
+      description: "Noyau énergétique ultra-puissant de nouvelle génération",
       date: "Il y a 1 minute",
-      price: "50.0",
-      priceUSD: "1,000",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop&q=80",
-      user: "PioneerOne",
+      price: "189.3",
+      priceUSD: "2,272",
+      image: "/collections/ultra-power.png",
+      user: "PowerLabs",
       userAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&q=80",
       type: "MINT",
       rarity: "Genesis",
@@ -129,14 +147,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 6,
-      name: "Cyber Punk Elite #567",
-      collection: "Cyber Punks Elite",
-      description: "Elite cyberpunk character",
+      name: "Freedom Gamer #0009",
+      collection: "Freedom Gamers",
+      description: "Gamer libre défendant la liberté numérique",
       date: "Il y a 3 minutes",
-      price: "75.0",
-      priceUSD: "1,500",
-      image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=200&h=200&fit=crop&q=80",
-      user: "CyberElite",
+      price: "87.5",
+      priceUSD: "1,050",
+      image: "/collections/freedom-gamers.png",
+      user: "GamerFreedom",
       userAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&q=80",
       type: "MINT",
       rarity: "Legendary",
@@ -145,14 +163,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 7,
-      name: "Ultra Racer #123",
-      collection: "Ultra Racers",
-      description: "High-speed racing NFT",
+      name: "The Counsellor #0001",
+      collection: "The Counsellor",
+      description: "Premier conseiller de la sagesse digitale",
       date: "Il y a 6 minutes",
-      price: "35.0",
-      priceUSD: "700",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop&q=80",
-      user: "SpeedDemon",
+      price: "234.9",
+      priceUSD: "2,819",
+      image: "/collections/counsellor.png",
+      user: "WisdomSeeker",
       userAvatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=40&h=40&fit=crop&q=80",
       type: "MINT",
       rarity: "Epic",
@@ -161,14 +179,14 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
     },
     {
       id: 8,
-      name: "Quantum Beast #456",
-      collection: "Quantum Beasts",
-      description: "Quantum-powered creature",
+      name: "Ultra Boat Elite #0001",
+      collection: "Ultra Boat Collection",
+      description: "Bateau ultra-élite de la collection maritime",
       date: "Il y a 10 minutes",
-      price: "95.0",
-      priceUSD: "1,900",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=200&fit=crop&q=80",
-      user: "QuantumMaster",
+      price: "345.6",
+      priceUSD: "4,147",
+      image: "/collections/ultra-boat.jpeg",
+      user: "MarineElite",
       userAvatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=40&h=40&fit=crop&q=80",
       type: "MINT",
       rarity: "Mythic",
@@ -178,8 +196,40 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
   ];
 
   const getCurrentTransactions = () => {
-    return activeTab === 'marketplace' ? marketplaceTransactions : launchpadTransactions;
+    let transactions = activeTab === 'marketplace' ? marketplaceTransactions : launchpadTransactions;
+    
+    // Appliquer le filtre
+    if (filter !== 'all') {
+      transactions = transactions.filter(transaction => 
+        transaction.type.toLowerCase() === filter.toLowerCase()
+      );
+    }
+    
+    return transactions;
   };
+
+  const getPaginatedTransactions = () => {
+    const filteredTransactions = getCurrentTransactions();
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredTransactions.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = () => {
+    return Math.ceil(getCurrentTransactions().length / itemsPerPage);
+  };
+
+  // Réinitialiser la page quand on change d'onglet ou de filtre
+  useEffect(() => {
+    setCurrentPage(1);
+    setVisibleCards([]);
+    
+    // Rendre toutes les cartes visibles après un court délai
+    setTimeout(() => {
+      const currentTransactions = getCurrentTransactions();
+      setVisibleCards(currentTransactions.map((_, index) => index));
+    }, 200);
+  }, [activeTab, filter]);
 
   const getTypeColor = (type: string) => {
     switch (type) {
@@ -293,7 +343,7 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
 
         {/* Action Button */}
         <button className="w-full bg-gradient-to-r from-[#7A52D1]/20 to-blue-500/20 hover:from-[#7A52D1]/30 hover:to-blue-500/30 border border-[#7A52D1]/30 hover:border-[#7A52D1]/50 text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group">
-          <span>Voir Détails</span>
+          <span>{t('home.transactions.viewDetails')}</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
@@ -320,15 +370,15 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-[#7A52D1]/20 backdrop-blur-sm border border-[#7A52D1]/30 rounded-full px-4 py-2 mb-6">
             <Zap className="w-4 h-4 text-[#7A52D1]" />
-            <span className="text-sm text-white font-medium">Activité en Temps Réel</span>
+            <span className="text-sm text-white font-medium">{t('home.transactions.realTime')}</span>
           </div>
 
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-              Transactions
+              {t('home.transactions.title')}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
-              Récentes
+              {t('home.transactions.subtitle')}
             </span>
           </h2>
           
@@ -337,61 +387,113 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex items-center justify-center mb-12">
-          <div className="bg-black/40 backdrop-blur-sm rounded-xl p-2 border border-[#7A52D1]/20">
-            <button
-              onClick={() => setActiveTab('marketplace')}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                activeTab === 'marketplace'
-                  ? 'bg-[#7A52D1] text-white shadow-lg shadow-[#7A52D1]/25'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-              }`}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              <span>Marketplace</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('launchpad')}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                activeTab === 'launchpad'
-                  ? 'bg-[#7A52D1] text-white shadow-lg shadow-[#7A52D1]/25'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-              }`}
-            >
-              <Rocket className="w-5 h-5" />
-              <span>Launchpad</span>
-            </button>
-          </div>
+        {/* Tabs et Filtres centrés verticalement */}
+        <div className="flex flex-col items-center justify-center mb-12 space-y-6">
+          {/* Tabs améliorés */}
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-2 border border-[#7A52D1]/20">
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setActiveTab('marketplace')}
+                className={`flex items-center space-x-3 px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                  activeTab === 'marketplace'
+                    ? 'bg-gradient-to-r from-[#7A52D1] to-violet-600 text-white shadow-lg shadow-[#7A52D1]/40 scale-105'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50 hover:scale-102'
+                }`}
+              >
+                <ShoppingCart className="w-5 h-5" />
+                <span>{t('home.transactions.marketplace')}</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('launchpad')}
+                className={`flex items-center space-x-3 px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                  activeTab === 'launchpad'
+                    ? 'bg-gradient-to-r from-[#7A52D1] to-violet-600 text-white shadow-lg shadow-[#7A52D1]/40 scale-105'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50 hover:scale-102'
+                }`}
+              >
+                <Rocket className="w-5 h-5" />
+                <span>{t('home.transactions.launchpad')}</span>
+              </button>
             </div>
-
-        {/* Filters */}
-        <div className="flex items-center justify-center mb-12">
-          <div className="flex items-center space-x-4">
-            <Filter className="w-5 h-5 text-gray-400" />
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="bg-black/40 border border-[#7A52D1]/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#7A52D1] transition-colors"
-            >
-              <option value="all">Toutes les transactions</option>
-              <option value="vente">Ventes</option>
-              <option value="achat">Achats</option>
-              <option value="listing">Listings</option>
-              <option value="mint">Mints</option>
-            </select>
+          </div>
+          
+          {/* Filtres améliorés */}
+          <div className="flex items-center justify-center">
+            <div className="flex items-center space-x-4 bg-black/40 backdrop-blur-sm border border-[#7A52D1]/20 rounded-xl px-6 py-3">
+              <div className="flex items-center space-x-2 text-gray-400">
+                <Filter className="w-5 h-5" />
+                <span className="text-sm font-medium">Filtrer par</span>
+              </div>
+              <select
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className="bg-gray-800/70 border border-gray-600/50 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-[#7A52D1] focus:ring-2 focus:ring-[#7A52D1]/20 transition-all duration-300 cursor-pointer hover:bg-gray-700/70"
+              >
+                <option value="all">{t('home.transactions.allTransactions')}</option>
+                <option value="vente">{t('home.transactions.sales')}</option>
+                <option value="achat">{t('home.transactions.purchases')}</option>
+                <option value="listing">{t('home.transactions.listings')}</option>
+                <option value="mint">{t('home.transactions.mints')}</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Transactions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {getCurrentTransactions().map((transaction, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {getPaginatedTransactions().map((transaction, index) => (
             <TransactionCard 
               key={`${activeTab}-${transaction.id}`} 
               transaction={transaction} 
               index={index}
             />
           ))}
+        </div>
+
+        {/* Pagination */}
+        {getTotalPages() > 1 && (
+          <div className="flex items-center justify-center space-x-4 mb-12">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="flex items-center space-x-2 px-6 py-3 bg-black/40 backdrop-blur-sm border border-[#7A52D1]/20 rounded-xl text-white font-medium hover:border-[#7A52D1]/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#7A52D1]/10"
+            >
+              <ArrowRight className="w-4 h-4 rotate-180" />
+              <span>Précédent</span>
+            </button>
+
+            <div className="flex items-center space-x-2">
+              {Array.from({ length: getTotalPages() }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-12 h-12 rounded-xl font-bold transition-all duration-300 ${
+                    currentPage === page
+                      ? 'bg-gradient-to-r from-[#7A52D1] to-violet-600 text-white shadow-lg shadow-[#7A52D1]/40'
+                      : 'bg-black/40 backdrop-blur-sm border border-[#7A52D1]/20 text-gray-400 hover:text-white hover:border-[#7A52D1]/40 hover:bg-[#7A52D1]/10'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, getTotalPages()))}
+              disabled={currentPage === getTotalPages()}
+              className="flex items-center space-x-2 px-6 py-3 bg-black/40 backdrop-blur-sm border border-[#7A52D1]/20 rounded-xl text-white font-medium hover:border-[#7A52D1]/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#7A52D1]/10"
+            >
+              <span>Suivant</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* Info pagination */}
+        <div className="text-center mb-8">
+          <p className="text-gray-400 text-sm">
+            Affichage de {Math.min((currentPage - 1) * itemsPerPage + 1, getCurrentTransactions().length)} à {Math.min(currentPage * itemsPerPage, getCurrentTransactions().length)} sur {getCurrentTransactions().length} transactions
+          </p>
         </div>
 
         {/* Call to Action */}
@@ -401,7 +503,7 @@ const TransactionsSection = ({ onNavigate }: TransactionsSectionProps) => {
             className="group bg-gradient-to-r from-[#7A52D1] via-violet-600 to-blue-600 hover:from-[#6A42C1] hover:via-violet-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-[#7A52D1]/30 hover:shadow-[#7A52D1]/50 border border-[#7A52D1]/30"
           >
             <span className="flex items-center space-x-2">
-              <span>Voir Toutes les Transactions</span>
+              <span>{t('home.transactions.seeAll')}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>

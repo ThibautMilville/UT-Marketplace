@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animations personnalisées pour la vue 3D */
+@keyframes rotate360 {
+  from {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(1000px) rotateY(360deg);
+  }
+}
+
+@keyframes bounce-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-40px);
+  }
+}
+
+.animate-spin-slow {
+  animation: rotate360 8s linear infinite;
+}
+
+.animate-bounce-fade {
+  animation: bounce-fade 2s ease-out forwards;
+}
+
+/* Animation pour les notifications */
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation: slide-in-from-right 0.5s ease-out forwards;
+}
+
+.slide-in-from-right-full {
+  /* Utilisé avec animate-in */
+}

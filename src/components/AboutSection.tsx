@@ -16,12 +16,14 @@ import {
   ExternalLink,
   Heart
 } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface AboutSectionProps {
   onNavigate?: (page: string) => void;
 }
 
 const AboutSection = ({ onNavigate }: AboutSectionProps) => {
+  const { t } = useTranslation();
   const [visibleStats, setVisibleStats] = useState<number[]>([]);
   const [currentFeature, setCurrentFeature] = useState(0);
 
@@ -56,7 +58,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
     {
       icon: Users,
       value: "2.5M+",
-      label: "Utilisateurs Actifs",
+      label: t('home.about.stats.activeUsers'),
       color: "from-blue-500 to-cyan-500",
       bgColor: "bg-blue-500/20",
       borderColor: "border-blue-500/30"
@@ -64,7 +66,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
     {
       icon: Gamepad2,
       value: "15K+",
-      label: "Jeux Disponibles",
+      label: t('home.about.stats.gamesAvailable'),
       color: "from-green-500 to-emerald-500",
       bgColor: "bg-green-500/20",
       borderColor: "border-green-500/30"
@@ -72,7 +74,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
     {
       icon: Coins,
       value: "$125M+",
-      label: "Volume Échangé",
+      label: t('home.about.stats.volumeTraded'),
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-yellow-500/20",
       borderColor: "border-yellow-500/30"
@@ -80,7 +82,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
     {
       icon: TrendingUp,
       value: "98.5%",
-      label: "Satisfaction",
+      label: t('home.about.stats.satisfaction'),
       color: "from-purple-500 to-pink-500",
       bgColor: "bg-purple-500/20",
       borderColor: "border-purple-500/30"
@@ -90,26 +92,26 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
   const features = [
     {
       icon: Shield,
-      title: "Sécurité Blockchain",
-      description: "Transactions sécurisées et transparentes grâce à la technologie blockchain Ultra",
+      title: t('home.about.features.security.title'),
+      description: t('home.about.features.security.description'),
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: Zap,
-      title: "Vitesse Ultra",
-      description: "Transactions instantanées avec des frais réduits pour une expérience optimale",
+      title: t('home.about.features.speed.title'),
+      description: t('home.about.features.speed.description'),
       color: "from-yellow-500 to-orange-500"
     },
     {
       icon: Globe,
-      title: "Écosystème Global",
-      description: "Plateforme mondiale connectant joueurs, développeurs et créateurs",
+      title: t('home.about.features.ecosystem.title'),
+      description: t('home.about.features.ecosystem.description'),
       color: "from-green-500 to-emerald-500"
     },
     {
       icon: Award,
-      title: "NFTs Premium",
-      description: "Créez, échangez et collectionnez des NFTs gaming de haute qualité",
+      title: t('home.about.features.nfts.title'),
+      description: t('home.about.features.nfts.description'),
       color: "from-purple-500 to-pink-500"
     }
   ];
@@ -173,21 +175,20 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
         <div className="text-center mb-20">
           <div className="inline-flex items-center space-x-2 bg-[#7A52D1]/20 backdrop-blur-sm border border-[#7A52D1]/30 rounded-full px-4 py-2 mb-6">
             <Rocket className="w-4 h-4 text-[#7A52D1]" />
-            <span className="text-sm text-white font-medium">L'Avenir du Gaming</span>
+            <span className="text-sm text-white font-medium">{t('home.about.badge')}</span>
           </div>
           
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-              À Propos
+              {t('home.about.title')}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
-              d'Ultra
+              Ultra
             </span>
           </h2>
           
           <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Ultra révolutionne l'industrie du gaming en créant le premier écosystème blockchain 
-            dédié aux jeux, NFTs et expériences interactives
+            {t('home.about.subtitle')}
           </p>
         </div>
 
@@ -207,7 +208,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
                 <div className={`w-12 h-12 ${stat.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <IconComponent className={`w-6 h-6 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`} />
+                  <IconComponent className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
                 <div className="text-sm text-gray-400">{stat.label}</div>
@@ -222,25 +223,21 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
             {/* Main Description */}
             <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-[#7A52D1]/20">
               <h3 className="text-2xl font-bold text-white mb-6">
-                L'Écosystème Gaming de Demain
+                {t('home.about.ecosystem.title')}
               </h3>
               
               <div className="space-y-4 text-gray-300 leading-relaxed">
                 <p>
-                  Ultra donne accès à d'innombrables services : découvrez, achetez, jouez et vendez 
-                  vos jeux et articles de jeu, regardez des streams en direct, interagissez avec vos 
-                  influenceurs préférés, participez à des concours et tournois.
+                  {t('home.about.ecosystem.description1')}
                 </p>
                 
                 <p>
-                  Notre plateforme blockchain révolutionnaire offre une expérience gaming complète 
-                  avec des NFTs authentiques, des transactions sécurisées et une communauté mondiale 
-                  de joueurs passionnés.
+                  {t('home.about.ecosystem.description2')}
                 </p>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                {['Gaming', 'NFTs', 'Blockchain', 'Communauté'].map((tag, index) => (
+                {[t('home.about.tags.gaming'), t('home.about.tags.nfts'), t('home.about.tags.blockchain'), t('home.about.tags.community')].map((tag, index) => (
                   <span 
                     key={index}
                     className="px-3 py-1 bg-[#7A52D1]/20 border border-[#7A52D1]/30 rounded-full text-sm text-[#7A52D1] font-medium"
@@ -254,7 +251,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
             {/* Features Carousel */}
             <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-[#7A52D1]/20">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Fonctionnalités Clés</h3>
+                <h3 className="text-xl font-bold text-white">{t('home.about.keyFeatures')}</h3>
                 <div className="flex space-x-2">
                   {features.map((_, index) => (
                     <button
@@ -301,12 +298,11 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
             <div className="bg-gradient-to-r from-[#7A52D1]/20 to-blue-500/20 backdrop-blur-sm rounded-2xl p-8 border border-[#7A52D1]/30">
               <div className="flex items-center space-x-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-400" />
-                <h3 className="text-xl font-bold text-white">Rejoignez Ultra Aujourd'hui</h3>
+                <h3 className="text-xl font-bold text-white">{t('home.about.cta.title')}</h3>
               </div>
               
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Téléchargez l'application Ultra, créez votre compte et découvrez les meilleurs 
-                jeux AAA et indépendants. Échangez et revendez vos jeux via notre marketplace !
+                {t('home.about.cta.description')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -315,7 +311,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
                   className="group flex items-center justify-center space-x-2 bg-gradient-to-r from-[#7A52D1] to-violet-600 hover:from-[#6A42C1] hover:to-violet-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#7A52D1]/30"
                 >
                   <Rocket className="w-5 h-5" />
-                  <span>Commencer</span>
+                  <span>{t('home.about.cta.start')}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
                 
@@ -324,7 +320,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
                   className="group flex items-center justify-center space-x-2 bg-black/40 border border-gray-600 hover:border-[#7A52D1] text-white font-medium py-3 px-6 rounded-xl transition-all duration-300"
                 >
                   <Play className="w-4 h-4" />
-                  <span>Voir Collections</span>
+                  <span>{t('home.about.cta.viewCollections')}</span>
                 </button>
               </div>
             </div>
@@ -333,10 +329,10 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
           {/* Right Content - Social Updates */}
           <div className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-white">Actualités Ultra</h3>
+              <h3 className="text-2xl font-bold text-white">{t('home.about.news.title')}</h3>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-green-400 text-sm font-medium">En direct</span>
+                <span className="text-green-400 text-sm font-medium">{t('home.about.news.live')}</span>
               </div>
             </div>
 
@@ -380,7 +376,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
                       </div>
                       <button className="flex items-center space-x-1 hover:text-[#7A52D1] transition-colors">
                         <ExternalLink className="w-4 h-4" />
-                        <span>Voir plus</span>
+                        <span>{t('home.about.news.seeMore')}</span>
                       </button>
                     </div>
                   </div>
@@ -396,7 +392,7 @@ const AboutSection = ({ onNavigate }: AboutSectionProps) => {
               >
                 <span className="flex items-center space-x-2">
                   <Users className="w-5 h-5" />
-                  <span>Voir Statistiques</span>
+                  <span>{t('home.about.news.viewStats')}</span>
                   <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>

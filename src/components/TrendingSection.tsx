@@ -15,12 +15,14 @@ import {
   Activity,
   BarChart3
 } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface TrendingSectionProps {
   onNavigate?: (page: string, data?: any) => void;
 }
 
 const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
+  const { t } = useTranslation();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState('7d');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -48,348 +50,348 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
     '24h': [
       {
         rank: 1,
-        title: "Ultra Genesis #3847",
-        collection: "Ultra Genesis",
+        title: "Ultra Apes #0001",
+        collection: "Ultra Apes Collection",
         volume: "245.5K",
         volumeUSD: "$491K",
         volumeChange: 45.2,
         transactions: "156",
         transactionChange: 23.1,
-        floorPrice: "89.5 UOS",
-        floorPriceUSD: "$179",
+        floorPrice: "125.5 UOS",
+        floorPriceUSD: "$251",
         priceChange: 12.8,
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ultra-apes.jpeg",
         verified: true,
         trending: true,
         rarity: "Legendary",
-        owners: "2.1K",
+        owners: "12",
         timeLeft: "2h 15m"
       },
       {
         rank: 2,
-        title: "Cosmic Warrior #1205",
-        collection: "Cosmic Warriors",
+        title: "Cypherpunk #0001",
+        collection: "Cypherpunk Revolution",
         volume: "189.3K",
         volumeUSD: "$379K",
         volumeChange: 32.7,
         transactions: "98",
         transactionChange: 18.5,
-        floorPrice: "67.2 UOS",
-        floorPriceUSD: "$134",
+        floorPrice: "234.8 UOS",
+        floorPriceUSD: "$470",
         priceChange: -5.3,
-        image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=300&h=300&fit=crop&q=80",
+        image: "/collections/cypherpunk.jpg",
         verified: true,
         trending: true,
-        rarity: "Epic",
-        owners: "1.8K",
+        rarity: "Mythic",
+        owners: "9",
         timeLeft: "5h 42m"
       },
       {
         rank: 3,
-        title: "Digital Legend #892",
-        collection: "Digital Legends",
+        title: "Phygital Artifact #0001",
+        collection: "Phygital Artifacts",
         volume: "156.8K",
         volumeUSD: "$314K",
         volumeChange: 28.4,
         transactions: "76",
         transactionChange: 15.2,
-        floorPrice: "45.9 UOS",
-        floorPriceUSD: "$92",
+        floorPrice: "298.9 UOS",
+        floorPriceUSD: "$598",
         priceChange: 8.7,
-        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&q=80",
-        verified: false,
-        trending: false,
-        rarity: "Rare",
-        owners: "3.2K",
+        image: "/collections/phygital.png",
+        verified: true,
+        trending: true,
+        rarity: "Mythic",
+        owners: "11",
         timeLeft: "1d 3h"
       },
       {
         rank: 4,
-        title: "Mystic Creature #2398",
-        collection: "Mystic Creatures",
+        title: "Ashes Genesis #0001",
+        collection: "Ashes Genesis",
         volume: "134.6K",
         volumeUSD: "$269K",
         volumeChange: 19.8,
         transactions: "54",
         transactionChange: 12.3,
-        floorPrice: "34.7 UOS",
-        floorPriceUSD: "$69",
+        floorPrice: "456.8 UOS",
+        floorPriceUSD: "$914",
         priceChange: 6.1,
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ashes.png",
         verified: true,
-        trending: false,
-        rarity: "Epic",
-        owners: "2.7K",
+        trending: true,
+        rarity: "Mythic",
+        owners: "13",
         timeLeft: "12h 30m"
       },
       {
         rank: 5,
-        title: "Cyber Punk Elite #567",
-        collection: "Cyber Punks Elite",
+        title: "Freedom Gamer #0001",
+        collection: "Freedom Gamers Elite",
         volume: "123.4K",
         volumeUSD: "$247K",
         volumeChange: 15.6,
         transactions: "43",
         transactionChange: 9.8,
-        floorPrice: "56.3 UOS",
-        floorPriceUSD: "$113",
+        floorPrice: "167.2 UOS",
+        floorPriceUSD: "$334",
         priceChange: -2.4,
-        image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=300&h=300&fit=crop&q=80",
+        image: "/collections/freedom-gamers.png",
         verified: true,
-        trending: true,
+        trending: false,
         rarity: "Legendary",
-        owners: "1.5K",
+        owners: "8",
         timeLeft: "6h 15m"
       },
       {
         rank: 6,
-        title: "Ultra Racer #123",
-        collection: "Ultra Racers",
+        title: "Ultra Boat #0001",
+        collection: "Ultra Boat Adventures",
         volume: "98.7K",
         volumeUSD: "$197K",
         volumeChange: 12.3,
         transactions: "32",
         transactionChange: 7.5,
-        floorPrice: "78.9 UOS",
-        floorPriceUSD: "$158",
+        floorPrice: "89.8 UOS",
+        floorPriceUSD: "$180",
         priceChange: 4.2,
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ultra-boat.jpeg",
         verified: true,
-        trending: false,
-        rarity: "Mythic",
-        owners: "892",
+        trending: true,
+        rarity: "Epic",
+        owners: "10",
         timeLeft: "4h 20m"
       }
     ],
     '7d': [
       {
         rank: 1,
-        title: "Ultra Genesis #3847",
-        collection: "Ultra Genesis",
+        title: "Ashes Genesis #0001",
+        collection: "Ashes Genesis",
         volume: "1.25M",
         volumeUSD: "$2.5M",
         volumeChange: 67.8,
         transactions: "892",
         transactionChange: 45.2,
-        floorPrice: "89.5 UOS",
-        floorPriceUSD: "$179",
+        floorPrice: "456.8 UOS",
+        floorPriceUSD: "$914",
         priceChange: 23.4,
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ashes.png",
         verified: true,
         trending: true,
-        rarity: "Legendary",
-        owners: "2.1K",
+        rarity: "Mythic",
+        owners: "13",
         timeLeft: "2h 15m"
       },
       {
         rank: 2,
-        title: "Digital Legend #892",
-        collection: "Digital Legends",
+        title: "Phygital Artifact #0001",
+        collection: "Phygital Artifacts",
         volume: "987.3K",
         volumeUSD: "$1.97M",
         volumeChange: 54.1,
         transactions: "567",
         transactionChange: 32.7,
-        floorPrice: "45.9 UOS",
-        floorPriceUSD: "$92",
+        floorPrice: "298.9 UOS",
+        floorPriceUSD: "$598",
         priceChange: 18.9,
-        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&q=80",
-        verified: false,
+        image: "/collections/phygital.png",
+        verified: true,
         trending: true,
-        rarity: "Rare",
-        owners: "3.2K",
+        rarity: "Mythic",
+        owners: "11",
         timeLeft: "1d 3h"
       },
       {
         rank: 3,
-        title: "Cosmic Warrior #1205",
-        collection: "Cosmic Warriors",
+        title: "Cypherpunk #0001",
+        collection: "Cypherpunk Revolution",
         volume: "756.8K",
         volumeUSD: "$1.51M",
         volumeChange: 43.6,
         transactions: "423",
         transactionChange: 28.4,
-        floorPrice: "67.2 UOS",
-        floorPriceUSD: "$134",
+        floorPrice: "234.8 UOS",
+        floorPriceUSD: "$470",
         priceChange: 15.7,
-        image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=300&h=300&fit=crop&q=80",
+        image: "/collections/cypherpunk.jpg",
         verified: true,
         trending: true,
-        rarity: "Epic",
-        owners: "1.8K",
+        rarity: "Mythic",
+        owners: "9",
         timeLeft: "5h 42m"
       },
       {
         rank: 4,
-        title: "Cyber Punk Elite #567",
-        collection: "Cyber Punks Elite",
+        title: "Ultra Power #0001",
+        collection: "Ultra Power Core",
         volume: "634.6K",
         volumeUSD: "$1.27M",
         volumeChange: 38.2,
         transactions: "298",
         transactionChange: 22.1,
-        floorPrice: "56.3 UOS",
-        floorPriceUSD: "$113",
+        floorPrice: "189.3 UOS",
+        floorPriceUSD: "$379",
         priceChange: 12.8,
-        image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ultra-power.png",
         verified: true,
-        trending: true,
-        rarity: "Legendary",
-        owners: "1.5K",
+        trending: false,
+        rarity: "Epic",
+        owners: "7",
         timeLeft: "6h 15m"
       },
       {
         rank: 5,
-        title: "Ultra Racer #123",
-        collection: "Ultra Racers",
+        title: "Ultra Apes #0001",
+        collection: "Ultra Apes Collection",
         volume: "523.4K",
         volumeUSD: "$1.05M",
         volumeChange: 31.5,
         transactions: "234",
         transactionChange: 18.7,
-        floorPrice: "78.9 UOS",
-        floorPriceUSD: "$158",
+        floorPrice: "125.5 UOS",
+        floorPriceUSD: "$251",
         priceChange: 9.4,
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ultra-apes.jpeg",
         verified: true,
-        trending: false,
-        rarity: "Mythic",
-        owners: "892",
+        trending: true,
+        rarity: "Legendary",
+        owners: "12",
         timeLeft: "4h 20m"
       },
       {
         rank: 6,
-        title: "Mystic Creature #2398",
-        collection: "Mystic Creatures",
+        title: "Digital Counsellor #0001",
+        collection: "Digital Counsellor",
         volume: "456.7K",
         volumeUSD: "$913K",
         volumeChange: 27.8,
         transactions: "189",
         transactionChange: 15.3,
-        floorPrice: "34.7 UOS",
-        floorPriceUSD: "$69",
+        floorPrice: "156.8 UOS",
+        floorPriceUSD: "$314",
         priceChange: 6.9,
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&q=80",
+        image: "/collections/counsellor.png",
         verified: true,
         trending: false,
         rarity: "Epic",
-        owners: "2.7K",
+        owners: "7",
         timeLeft: "12h 30m"
       }
     ],
     '30d': [
       {
         rank: 1,
-        title: "Ultra Genesis #3847",
-        collection: "Ultra Genesis",
+        title: "Ashes Apex #0001",
+        collection: "Ashes Apex",
         volume: "4.2M",
         volumeUSD: "$8.4M",
         volumeChange: 89.3,
         transactions: "3.2K",
         transactionChange: 67.8,
-        floorPrice: "89.5 UOS",
-        floorPriceUSD: "$179",
+        floorPrice: "634.8 UOS",
+        floorPriceUSD: "$1,270",
         priceChange: 45.7,
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ahes-4.png",
         verified: true,
         trending: true,
-        rarity: "Legendary",
-        owners: "2.1K",
+        rarity: "Mythic",
+        owners: "8",
         timeLeft: "2h 15m"
       },
       {
         rank: 2,
-        title: "Cyber Punk Elite #567",
-        collection: "Cyber Punks Elite",
+        title: "Ashes Revolution #0001",
+        collection: "Ashes Revolution",
         volume: "3.8M",
         volumeUSD: "$7.6M",
         volumeChange: 76.4,
         transactions: "2.8K",
         transactionChange: 54.1,
-        floorPrice: "56.3 UOS",
-        floorPriceUSD: "$113",
+        floorPrice: "567.2 UOS",
+        floorPriceUSD: "$1,134",
         priceChange: 38.2,
-        image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ashes-3.png",
         verified: true,
         trending: true,
-        rarity: "Legendary",
-        owners: "1.5K",
+        rarity: "Mythic",
+        owners: "9",
         timeLeft: "6h 15m"
       },
       {
         rank: 3,
-        title: "Ultra Racer #123",
-        collection: "Ultra Racers",
+        title: "Ashes Uprising #0001",
+        collection: "Ashes Uprising",
         volume: "3.1M",
         volumeUSD: "$6.2M",
         volumeChange: 65.7,
         transactions: "2.1K",
         transactionChange: 43.6,
-        floorPrice: "78.9 UOS",
-        floorPriceUSD: "$158",
+        floorPrice: "389.5 UOS",
+        floorPriceUSD: "$779",
         priceChange: 31.5,
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=300&fit=crop&q=80",
+        image: "/collections/ashes-2.png",
         verified: true,
         trending: true,
-        rarity: "Mythic",
-        owners: "892",
+        rarity: "Legendary",
+        owners: "11",
         timeLeft: "4h 20m"
       },
       {
         rank: 4,
-        title: "Digital Legend #892",
-        collection: "Digital Legends",
+        title: "Ashes Genesis #0001",
+        collection: "Ashes Genesis",
         volume: "2.7M",
         volumeUSD: "$5.4M",
         volumeChange: 58.9,
         transactions: "1.9K",
         transactionChange: 38.2,
-        floorPrice: "45.9 UOS",
-        floorPriceUSD: "$92",
+        floorPrice: "456.8 UOS",
+        floorPriceUSD: "$914",
         priceChange: 27.8,
-        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&q=80",
-        verified: false,
+        image: "/collections/ashes.png",
+        verified: true,
         trending: true,
-        rarity: "Rare",
-        owners: "3.2K",
+        rarity: "Mythic",
+        owners: "13",
         timeLeft: "1d 3h"
       },
       {
         rank: 5,
-        title: "Cosmic Warrior #1205",
-        collection: "Cosmic Warriors",
+        title: "Phygital Artifact #0001",
+        collection: "Phygital Artifacts",
         volume: "2.3M",
         volumeUSD: "$4.6M",
         volumeChange: 52.3,
         transactions: "1.6K",
         transactionChange: 32.7,
-        floorPrice: "67.2 UOS",
-        floorPriceUSD: "$134",
+        floorPrice: "298.9 UOS",
+        floorPriceUSD: "$598",
         priceChange: 23.4,
-        image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=300&h=300&fit=crop&q=80",
+        image: "/collections/phygital.png",
         verified: true,
-        trending: false,
-        rarity: "Epic",
-        owners: "1.8K",
+        trending: true,
+        rarity: "Mythic",
+        owners: "11",
         timeLeft: "5h 42m"
       },
       {
         rank: 6,
-        title: "Mystic Creature #2398",
-        collection: "Mystic Creatures",
+        title: "Cypherpunk #0001",
+        collection: "Cypherpunk Revolution",
         volume: "1.9M",
         volumeUSD: "$3.8M",
         volumeChange: 47.1,
         transactions: "1.3K",
         transactionChange: 28.4,
-        floorPrice: "34.7 UOS",
-        floorPriceUSD: "$69",
+        floorPrice: "234.8 UOS",
+        floorPriceUSD: "$470",
         priceChange: 19.6,
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&q=80",
+        image: "/collections/cypherpunk.jpg",
         verified: true,
-        trending: false,
-        rarity: "Epic",
-        owners: "2.7K",
+        trending: true,
+        rarity: "Mythic",
+        owners: "9",
         timeLeft: "12h 30m"
       }
     ]
@@ -456,13 +458,13 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#7A52D1]/20 to-violet-600/20 backdrop-blur-sm border border-[#7A52D1]/30 rounded-full px-6 py-3 mb-8">
             <Flame className="w-5 h-5 text-[#7A52D1]" />
-            <span className="text-white font-medium">UNIQs en Tendance</span>
+            <span className="text-white font-medium">{t('home.trending.live')}</span>
             <Sparkles className="w-4 h-4 text-violet-400" />
           </div>
           
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-              Tendances
+              {t('home.trending.title')}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#7A52D1] via-violet-400 to-blue-400 bg-clip-text text-transparent">
               Ultra
@@ -470,16 +472,16 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
           </h2>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12">
-            Découvrez les UNIQs les plus performants et suivez les tendances du marché en temps réel
+            {t('home.trending.subtitle')}
           </p>
 
           {/* Period Selector */}
           <div className="flex justify-center mb-12">
             <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-2 border border-[#7A52D1]/20">
               {[
-                { key: '24h', label: '24 Heures', icon: Clock },
-                { key: '7d', label: '7 Jours', icon: BarChart3 },
-                { key: '30d', label: '30 Jours', icon: Activity }
+                { key: '24h', label: t('trending.period.24h'), icon: Clock },
+                { key: '7d', label: t('trending.period.7d'), icon: BarChart3 },
+                { key: '30d', label: t('trending.period.30d'), icon: Activity }
               ].map(period => {
                 const IconComponent = period.icon;
                 return (
@@ -544,13 +546,13 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                   {item.verified && (
                     <div className="bg-green-500/20 backdrop-blur-sm border border-green-500/30 rounded-full px-2 py-1 flex items-center space-x-1">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-green-400 font-medium">Vérifié</span>
+                      <span className="text-xs text-green-400 font-medium">{t('marketplace.verified')}</span>
                     </div>
                   )}
                                      {item.trending && (
                      <div className="bg-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-full px-2 py-1 flex items-center space-x-1">
                        <Flame className="w-3 h-3 text-red-400 animate-pulse" />
-                       <span className="text-xs text-red-400 font-medium">Hot</span>
+                       <span className="text-xs text-red-400 font-medium">{t('trending.hot')}</span>
                      </div>
                    )}
                 </div>
@@ -572,7 +574,7 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#7A52D1]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
                   <button className="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-6 py-2 rounded-full font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center space-x-2">
                     <Eye className="w-4 h-4" />
-                    <span>Explorer</span>
+                    <span>{t('trending.explore')}</span>
                   </button>
                 </div>
               </div>
@@ -588,7 +590,7 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="bg-gray-800/30 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-400">Volume</span>
+                      <span className="text-xs text-gray-400">{t('trending.volume')}</span>
                       <div className={`flex items-center space-x-1 text-xs ${
                         item.volumeChange > 0 ? 'text-green-400' : 'text-red-400'
                       }`}>
@@ -602,7 +604,7 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
 
                   <div className="bg-gray-800/30 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-400">Floor</span>
+                      <span className="text-xs text-gray-400">{t('trending.floor')}</span>
                       <div className={`flex items-center space-x-1 text-xs ${
                         item.priceChange > 0 ? 'text-green-400' : 'text-red-400'
                       }`}>
@@ -629,7 +631,7 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                   </div>
                   <div className="flex items-center space-x-1">
                     <Eye className="w-3 h-3" />
-                    <span>{item.owners} propriétaires</span>
+                    <span>{item.owners} {t('trending.owners')}</span>
                   </div>
                 </div>
 
@@ -642,7 +644,7 @@ const TrendingSection = ({ onNavigate }: TrendingSectionProps) => {
                   className="w-full bg-gradient-to-r from-[#7A52D1]/20 to-violet-600/20 hover:from-[#7A52D1]/30 hover:to-violet-600/30 border border-[#7A52D1]/30 hover:border-[#7A52D1]/50 text-white py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 group"
                 >
                   <Zap className="w-4 h-4 group-hover:text-[#7A52D1] transition-colors" />
-                  <span>Explorer l'UNIQ</span>
+                  <span>{t('marketplace.exploreUniq')}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>

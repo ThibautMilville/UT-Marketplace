@@ -167,34 +167,58 @@ const UniqDetailPage = ({ uniq, onNavigate }: UniqDetailPageProps) => {
 
   const relatedUniqs = [
     {
-      id: "4521",
-      name: "Stellar Guardian #4521",
-      collection: "Ultra Genesis",
-      price: "98.7 UOS",
-      priceUSD: "$1,974",
-      image:
-        "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=300&fit=crop&q=80",
-      rarity: "Epic",
-    },
-    {
-      id: "2156",
-      name: "Void Walker #2156",
-      collection: "Ultra Genesis",
-      price: "156.3 UOS",
-      priceUSD: "$3,126",
-      image:
-        "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=300&h=300&fit=crop&q=80",
+      id: "0002",
+      name: "Ashes Genesis #0002",
+      collection: "Ashes Genesis",
+      price: "456.8 UOS",
+      priceUSD: "$5,481",
+      image: "/collections/ashes.png",
       rarity: "Legendary",
     },
     {
-      id: "7834",
-      name: "Quantum Mage #7834",
-      collection: "Ultra Genesis",
-      price: "203.9 UOS",
-      priceUSD: "$4,078",
-      image:
-        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&q=80",
+      id: "0008",
+      name: "Phygital Artifact #0008",
+      collection: "Phygital Artifacts", 
+      price: "298.9 UOS",
+      priceUSD: "$3,587",
+      image: "/collections/phygital.png",
+      rarity: "Epic",
+    },
+    {
+      id: "0013",
+      name: "Cypherpunk Revolutionary #0013",
+      collection: "Cypherpunk Revolution",
+      price: "234.8 UOS",
+      priceUSD: "$2,817",
+      image: "/collections/cypherpunk.jpg",
+      rarity: "Rare",
+    },
+    {
+      id: "0009",
+      name: "Ultra Ape Elite #0009",
+      collection: "Ultra Apes Collection",
+      price: "125.5 UOS",
+      priceUSD: "$1,506", 
+      image: "/collections/ultra-apes.jpeg",
       rarity: "Mythic",
+    },
+    {
+      id: "0004",
+      name: "Ultra Power Core #0004",
+      collection: "Ultra Power Core",
+      price: "189.3 UOS",
+      priceUSD: "$2,272",
+      image: "/collections/ultra-power.png",
+      rarity: "Genesis",
+    },
+    {
+      id: "0010",
+      name: "Freedom Gamer #0010",
+      collection: "Freedom Gamers",
+      price: "87.5 UOS",
+      priceUSD: "$1,050",
+      image: "/collections/freedom-gamers.png",
+      rarity: "Legendary",
     },
   ];
 
@@ -233,10 +257,12 @@ const UniqDetailPage = ({ uniq, onNavigate }: UniqDetailPageProps) => {
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
+      case "Genesis":
+        return "from-yellow-500 to-orange-500";
       case "Mythic":
         return "from-red-500 to-pink-500";
       case "Legendary":
-        return "from-yellow-500 to-orange-500";
+        return "from-yellow-400 to-orange-400";
       case "Epic":
         return "from-purple-500 to-violet-500";
       case "Rare":
@@ -395,7 +421,7 @@ const UniqDetailPage = ({ uniq, onNavigate }: UniqDetailPageProps) => {
               className="flex items-center space-x-2 px-4 py-2 bg-black/50 backdrop-blur-sm rounded-xl text-white hover:bg-black/70 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Retour au Marketplace</span>
+              <span>Retour à la Marketplace</span>
             </button>
 
             <div className="flex items-center space-x-4">
@@ -856,6 +882,57 @@ const UniqDetailPage = ({ uniq, onNavigate }: UniqDetailPageProps) => {
                 {relatedUniqs.map((item, index) => (
                   <div
                     key={index}
+                    onClick={() => {
+                      const adaptedUniq = {
+                        id: item.id,
+                        name: item.name,
+                        collection: item.collection,
+                        description: `${item.name} is a unique NFT from the ${item.collection} collection.`,
+                        price: parseFloat(item.price.replace(/[^\d.]/g, "")),
+                        priceUSD: parseFloat(item.priceUSD.replace(/[^\d.]/g, "")),
+                        image: item.image,
+                        rarity: item.rarity,
+                        rarityRank: `#${item.id}`,
+                        seller: "current_owner",
+                        sellerAddress: "seller.ultra",
+                        owner: "current_owner",
+                        creator: "Creator",
+                        creatorAddress: "creator.ultra",
+                        likes: Math.floor(Math.random() * 1000) + 100,
+                        views: Math.floor(Math.random() * 5000) + 500,
+                        isLiked: false,
+                        isAuction: false,
+                        auction: null,
+                        serialNumber: `${item.id}/15`,
+                        mintDate: "2024-01-15T00:00:00Z",
+                        blockchain: "Ultra",
+                        contractAddress: "ultra.nft",
+                        tokenId: item.id,
+                        royalties: 5,
+                        attributes: [
+                          { trait_type: "Collection", value: item.collection },
+                          { trait_type: "Rarity", value: item.rarity },
+                          { trait_type: "Serial Number", value: `${item.id}/15` }
+                        ],
+                        history: [
+                          {
+                            type: "Mint",
+                            from: "Ultra Network",
+                            to: "Creator",
+                            price: 0,
+                            date: "2024-01-15T00:00:00Z",
+                            hash: `0x${Math.random().toString(16).substr(2, 8)}`
+                          }
+                        ],
+                        properties: {
+                          category: "Art",
+                          subcategory: "Digital Art",
+                          format: "PNG",
+                          size: "1024x1024"
+                        }
+                      };
+                      onNavigate("uniq-detail", adaptedUniq);
+                    }}
                     className="group bg-gray-800/30 rounded-xl overflow-hidden hover:bg-gray-800/50 transition-all duration-300 cursor-pointer"
                   >
                     <div className="relative h-48">
@@ -888,7 +965,61 @@ const UniqDetailPage = ({ uniq, onNavigate }: UniqDetailPageProps) => {
                             {item.priceUSD}
                           </div>
                         </div>
-                        <button className="px-4 py-2 bg-[#7A52D1] hover:bg-[#6A42C1] text-white rounded-lg text-sm transition-colors">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const adaptedUniq = {
+                              id: item.id,
+                              name: item.name,
+                              collection: item.collection,
+                              description: `${item.name} is a unique NFT from the ${item.collection} collection.`,
+                              price: parseFloat(item.price.replace(/[^\d.]/g, "")),
+                              priceUSD: parseFloat(item.priceUSD.replace(/[^\d.]/g, "")),
+                              image: item.image,
+                              rarity: item.rarity,
+                              rarityRank: `#${item.id}`,
+                              seller: "current_owner",
+                              sellerAddress: "seller.ultra",
+                              owner: "current_owner",
+                              creator: "Creator",
+                              creatorAddress: "creator.ultra",
+                              likes: Math.floor(Math.random() * 1000) + 100,
+                              views: Math.floor(Math.random() * 5000) + 500,
+                              isLiked: false,
+                              isAuction: false,
+                              auction: null,
+                              serialNumber: `${item.id}/15`,
+                              mintDate: "2024-01-15T00:00:00Z",
+                              blockchain: "Ultra",
+                              contractAddress: "ultra.nft",
+                              tokenId: item.id,
+                              royalties: 5,
+                              attributes: [
+                                { trait_type: "Collection", value: item.collection },
+                                { trait_type: "Rarity", value: item.rarity },
+                                { trait_type: "Serial Number", value: `${item.id}/15` }
+                              ],
+                              history: [
+                                {
+                                  type: "Mint",
+                                  from: "Ultra Network",
+                                  to: "Creator",
+                                  price: 0,
+                                  date: "2024-01-15T00:00:00Z",
+                                  hash: `0x${Math.random().toString(16).substr(2, 8)}`
+                                }
+                              ],
+                              properties: {
+                                category: "Art",
+                                subcategory: "Digital Art",
+                                format: "PNG",
+                                size: "1024x1024"
+                              }
+                            };
+                            onNavigate("uniq-detail", adaptedUniq);
+                          }}
+                          className="px-4 py-2 bg-[#7A52D1] hover:bg-[#6A42C1] text-white rounded-lg text-sm transition-colors"
+                        >
                           Voir
                         </button>
                       </div>

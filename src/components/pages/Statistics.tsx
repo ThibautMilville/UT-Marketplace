@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { TrendingUp, TrendingDown, Users, DollarSign, ShoppingCart, Activity, BarChart3, PieChart, Calendar, Filter, Download, RefreshCw, Eye, Heart, Zap, Award, Crown, Flame } from 'lucide-react'
+import React, { useState } from 'react'
+import { TrendingUp, TrendingDown, Users, DollarSign, ShoppingCart, Activity, BarChart3, Download, RefreshCw, Award } from 'lucide-react'
 import TransactionModal from '../TransactionModal'
 
 interface StatisticsPageProps {
@@ -137,72 +137,124 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
     const collectionsData = {
       '24h': [
         { 
-          name: "Ultra's Power Collection", 
-          volume: 12456.50, 
+          name: "Ashes Genesis", 
+          volume: 456789.50, 
+          change: 28.9, 
+          floorPrice: 456.80, 
+          items: 15, 
+          owners: 13, 
+          image: '/collections/ashes.png',
+          description: "Première collection Ashes avec des designs légendaires. L'origine d'un univers post-apocalyptique rempli de mystères.",
+          banner: '/collections/ashes.png',
+          creator: 'AshesStudio',
+          verified: true
+        },
+        { 
+          name: "Phygital Artifacts", 
+          volume: 298934.20, 
+          change: 32.6, 
+          floorPrice: 298.90, 
+          items: 15, 
+          owners: 11, 
+          image: '/collections/phygital.png',
+          description: "Artefacts physiques et numériques fusionnés. L'avenir de la collection où le monde réel rencontre le virtuel.",
+          banner: '/collections/phygital.png',
+          creator: 'PhygitalLab',
+          verified: true
+        },
+        { 
+          name: "Cypherpunk Revolution", 
+          volume: 234567.80, 
           change: 25.3, 
-          floorPrice: 245.80, 
-          items: 10000, 
-          owners: 3456, 
-          image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop',
-          description: "Une collection exclusive d'avatars Ultra avec des pouvoirs uniques et des designs époustouflants.",
-          banner: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=300&fit=crop',
-          creator: 'UltraTeam',
+          floorPrice: 234.75, 
+          items: 15, 
+          owners: 9, 
+          image: '/collections/cypherpunk.jpg',
+          description: "Hackers et rebelles du monde numérique. Collection cyberpunk authentique pour les défenseurs de la vie privée et de la liberté.",
+          banner: '/collections/cypherpunk.jpg',
+          creator: 'CryptoRebels',
           verified: true
         },
         { 
-          name: "Cosmic Warriors", 
-          volume: 8934.20, 
-          change: 18.7, 
-          floorPrice: 89.50, 
-          items: 5000, 
-          owners: 2134, 
-          image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop',
-          description: "Des guerriers cosmiques venus des confins de l'univers pour défendre la galaxie.",
-          banner: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=1200&h=300&fit=crop',
-          creator: 'CosmicStudio',
+          name: "Ultra Apes Collection", 
+          volume: 125456.50, 
+          change: 12.5, 
+          floorPrice: 125.50, 
+          items: 15, 
+          owners: 12, 
+          image: '/collections/ultra-apes.jpeg',
+          description: "Collection exclusive d'apes Ultra avec des traits uniques et des pouvoirs spéciaux.",
+          banner: '/collections/ultra-apes.jpeg',
+          creator: 'UltraStudio',
           verified: true
         },
         { 
-          name: "Digital Legends", 
-          volume: 6789.80, 
-          change: -5.1, 
-          floorPrice: 156.90, 
-          items: 7500, 
-          owners: 2876, 
-          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop',
-          description: "Les légendes du monde digital prennent vie dans cette collection épique.",
-          banner: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=300&fit=crop',
-          creator: 'DigitalArt',
-          verified: false
+          name: "Ultra Boat Adventures", 
+          volume: 234567.80, 
+          change: 35.7, 
+          floorPrice: 345.90, 
+          items: 15, 
+          owners: 12, 
+          image: '/collections/ultra-boat.jpeg',
+          description: "Collection exclusive de bateaux ultra-modernes pour explorer les océans virtuels.",
+          banner: '/collections/ultra-boat.jpeg',
+          creator: 'MarineStudio',
+          verified: true
+        },
+        { 
+          name: "Ultra Power Core", 
+          volume: 89345.20, 
+          change: 19.4, 
+          floorPrice: 189.30, 
+          items: 15, 
+          owners: 7, 
+          image: '/collections/ultra-power.png',
+          description: "Sources d'énergie ultra-puissantes pour alimenter vos équipements.",
+          banner: '/collections/ultra-power.png',
+          creator: 'PowerLab',
+          verified: true
+        },
+        { 
+          name: "Ultra Boat Adventures", 
+          volume: 78234.80, 
+          change: 16.7, 
+          floorPrice: 89.75, 
+          items: 15, 
+          owners: 10, 
+          image: '/collections/ultra-boat.jpeg',
+          description: "Navires d'exploration pour les océans virtuels d'Ultra. Chaque bateau offre des capacités uniques pour découvrir de nouveaux territoires.",
+          banner: '/collections/ultra-boat.jpeg',
+          creator: 'AquaForge',
+          verified: true
         }
       ],
       '7d': [
-        { name: "Ultra's Power Collection", volume: 456789.50, change: 15.3, floorPrice: 245.80, items: 10000, owners: 3456, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop' },
-        { name: "Cosmic Warriors", volume: 234567.20, change: -8.7, floorPrice: 89.50, items: 5000, owners: 2134, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop' },
-        { name: "Digital Legends", volume: 189432.80, change: 23.1, floorPrice: 156.90, items: 7500, owners: 2876, image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
-        { name: "Mystic Creatures", volume: 145678.30, change: 5.4, floorPrice: 43.20, items: 15000, owners: 4567, image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop' },
-        { name: "Cyber Punks Elite", volume: 123456.70, change: 18.9, floorPrice: 198.40, items: 3000, owners: 1876, image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=100&h=100&fit=crop' }
+        { name: "Ashes Revolution", volume: 1567890.50, change: 35.7, floorPrice: 567.20, items: 15, owners: 9, image: '/collections/ashes-3.png' },
+        { name: "Ashes Apex", volume: 1234567.20, change: 41.2, floorPrice: 634.80, items: 15, owners: 8, image: '/collections/ahes-4.png' },
+        { name: "Ashes Genesis", volume: 1189432.80, change: 28.9, floorPrice: 456.80, items: 15, owners: 13, image: '/collections/ashes.png' },
+        { name: "Phygital Artifacts", volume: 989234.30, change: 32.6, floorPrice: 298.90, items: 15, owners: 11, image: '/collections/phygital.png' },
+        { name: "Cypherpunk Revolution", volume: 756234.70, change: 25.3, floorPrice: 234.75, items: 15, owners: 9, image: '/collections/cypherpunk.jpg' }
       ],
       '30d': [
-        { name: "Ultra's Power Collection", volume: 1456789.50, change: 35.8, floorPrice: 245.80, items: 10000, owners: 3456, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop' },
-        { name: "Digital Legends", volume: 1189432.80, change: 42.1, floorPrice: 156.90, items: 7500, owners: 2876, image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
-        { name: "Cosmic Warriors", volume: 934567.20, change: 12.3, floorPrice: 89.50, items: 5000, owners: 2134, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop' },
-        { name: "Cyber Punks Elite", volume: 723456.70, change: 28.9, floorPrice: 198.40, items: 3000, owners: 1876, image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=100&h=100&fit=crop' },
-        { name: "Mystic Creatures", volume: 645678.30, change: -15.4, floorPrice: 43.20, items: 15000, owners: 4567, image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop' }
+        { name: "Ashes Apex", volume: 4567890.50, change: 41.2, floorPrice: 634.80, items: 15, owners: 8, image: '/collections/ahes-4.png' },
+        { name: "Ashes Revolution", volume: 3456789.80, change: 35.7, floorPrice: 567.20, items: 15, owners: 9, image: '/collections/ashes-3.png' },
+        { name: "Ashes Genesis", volume: 2789432.80, change: 28.9, floorPrice: 456.80, items: 15, owners: 13, image: '/collections/ashes.png' },
+        { name: "Ashes Uprising", volume: 2234567.20, change: 22.4, floorPrice: 389.50, items: 15, owners: 11, image: '/collections/ashes-2.png' },
+        { name: "Phygital Artifacts", volume: 1567234.30, change: 32.6, floorPrice: 298.90, items: 15, owners: 11, image: '/collections/phygital.png' }
       ],
       '90d': [
-        { name: "Digital Legends", volume: 4189432.80, change: 67.1, floorPrice: 156.90, items: 7500, owners: 2876, image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
-        { name: "Ultra's Power Collection", volume: 3456789.50, change: 45.8, floorPrice: 245.80, items: 10000, owners: 3456, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop' },
-        { name: "Cyber Punks Elite", volume: 2723456.70, change: 89.2, floorPrice: 198.40, items: 3000, owners: 1876, image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=100&h=100&fit=crop' },
-        { name: "Cosmic Warriors", volume: 1934567.20, change: -23.7, floorPrice: 89.50, items: 5000, owners: 2134, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop' },
-        { name: "Mystic Creatures", volume: 1245678.30, change: 34.6, floorPrice: 43.20, items: 15000, owners: 4567, image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop' }
+        { name: "Ashes Apex", volume: 12567890.50, change: 41.2, floorPrice: 634.80, items: 15, owners: 8, image: '/collections/ahes-4.png' },
+        { name: "Ashes Revolution", volume: 9456789.80, change: 35.7, floorPrice: 567.20, items: 15, owners: 9, image: '/collections/ashes-3.png' },
+        { name: "Phygital Artifacts", volume: 7234567.30, change: 32.6, floorPrice: 298.90, items: 15, owners: 11, image: '/collections/phygital.png' },
+        { name: "Ashes Genesis", volume: 6189432.80, change: 28.9, floorPrice: 456.80, items: 15, owners: 13, image: '/collections/ashes.png' },
+        { name: "Cypherpunk Revolution", volume: 4567234.70, change: 25.3, floorPrice: 234.75, items: 15, owners: 9, image: '/collections/cypherpunk.jpg' }
       ],
       '1y': [
-        { name: "Digital Legends", volume: 18189432.80, change: 234.1, floorPrice: 156.90, items: 7500, owners: 2876, image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
-        { name: "Cyber Punks Elite", volume: 15723456.70, change: 456.2, floorPrice: 198.40, items: 3000, owners: 1876, image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=100&h=100&fit=crop' },
-        { name: "Ultra's Power Collection", volume: 12456789.50, change: 178.8, floorPrice: 245.80, items: 10000, owners: 3456, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop' },
-        { name: "Mystic Creatures", volume: 8245678.30, change: 123.4, floorPrice: 43.20, items: 15000, owners: 4567, image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop' },
-        { name: "Cosmic Warriors", volume: 6934567.20, change: 67.3, floorPrice: 89.50, items: 5000, owners: 2134, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=100&h=100&fit=crop' }
+        { name: "Ashes Apex", volume: 45678901.50, change: 41.2, floorPrice: 634.80, items: 15, owners: 8, image: '/collections/ahes-4.png' },
+        { name: "Ashes Revolution", volume: 34567890.80, change: 35.7, floorPrice: 567.20, items: 15, owners: 9, image: '/collections/ashes-3.png' },
+        { name: "Phygital Artifacts", volume: 23456789.30, change: 32.6, floorPrice: 298.90, items: 15, owners: 11, image: '/collections/phygital.png' },
+        { name: "Ashes Genesis", volume: 18945678.80, change: 28.9, floorPrice: 456.80, items: 15, owners: 13, image: '/collections/ashes.png' },
+        { name: "Cypherpunk Revolution", volume: 15678234.70, change: 25.3, floorPrice: 234.75, items: 15, owners: 9, image: '/collections/cypherpunk.jpg' }
       ]
     }
     return collectionsData[selectedPeriod as keyof typeof collectionsData] || collectionsData['7d']
@@ -223,15 +275,15 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       id: '1',
       type: 'VENTE' as const,
       status: 'Terminé' as const,
-      item: 'Ultra Power Genesis #3847',
-      collection: "Ultra's Power Collection",
-      price: 245.50,
-      priceUSD: 245.50 * 1.2,
-      from: 'ultrawhale92',
+      item: 'Ashes Genesis #0001',
+      collection: "Ashes Genesis",
+      price: 456.80,
+      priceUSD: 456.80 * 1.2,
+      from: 'ashescollector',
       to: 'cryptoking',
       date: new Date(Date.now() - 2 * 60 * 1000).toLocaleDateString('fr-FR'),
       time: '2 min',
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=50&h=50&fit=crop',
+      image: '/collections/ashes.png',
       hash: '0x1a2b3c4d5e6f7890abcdef1234567890abcdef12',
       blockNumber: 18456789,
       gasUsed: 21000,
@@ -242,14 +294,14 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       id: '2',
       type: 'LISTING' as const,
       status: 'Terminé' as const,
-      item: 'Cosmic Warrior Elite #1205',
-      collection: 'Cosmic Warriors',
-      price: 89.75,
-      priceUSD: 89.75 * 1.2,
-      from: 'spacehunter',
+      item: 'Phygital Artifact #0007',
+      collection: 'Phygital Artifacts',
+      price: 298.90,
+      priceUSD: 298.90 * 1.2,
+      from: 'phygitalhunter',
       date: new Date(Date.now() - 5 * 60 * 1000).toLocaleDateString('fr-FR'),
       time: '5 min',
-      image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=50&h=50&fit=crop',
+      image: '/collections/phygital.png',
       hash: '0x2b3c4d5e6f7890abcdef1234567890abcdef1234',
       blockNumber: 18456788,
       gasUsed: 18500,
@@ -260,15 +312,15 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       id: '3',
       type: 'ACHAT' as const,
       status: 'Terminé' as const,
-      item: 'Digital Legend Rare #892',
-      collection: 'Digital Legends',
-      price: 156.80,
-      priceUSD: 156.80 * 1.2,
-      from: 'bidmaster',
-      to: 'collector_pro',
+      item: 'Cypherpunk Revolutionary #0012',
+      collection: 'Cypherpunk Revolution',
+      price: 234.75,
+      priceUSD: 234.75 * 1.2,
+      from: 'cryptorebel',
+      to: 'cyberpunk_fan',
       date: new Date(Date.now() - 8 * 60 * 1000).toLocaleDateString('fr-FR'),
       time: '8 min',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=50&h=50&fit=crop',
+      image: '/collections/cypherpunk.jpg',
       hash: '0x3c4d5e6f7890abcdef1234567890abcdef123456',
       blockNumber: 18456787,
       gasUsed: 19200,
@@ -279,15 +331,15 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       id: '4',
       type: 'VENTE' as const,
       status: 'Terminé' as const,
-      item: 'Mystic Creature #2398',
-      collection: 'Mystic Creatures',
-      price: 43.90,
-      priceUSD: 43.90 * 1.2,
-      from: 'mysticholder',
-      to: 'collector99',
+      item: 'Ultra Ape Elite #0008',
+      collection: 'Ultra Apes Collection',
+      price: 125.50,
+      priceUSD: 125.50 * 1.2,
+      from: 'apemaster',
+      to: 'ultracollector',
       date: new Date(Date.now() - 12 * 60 * 1000).toLocaleDateString('fr-FR'),
       time: '12 min',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=50&h=50&fit=crop',
+      image: '/collections/ultra-apes.jpeg',
       hash: '0x4d5e6f7890abcdef1234567890abcdef12345678',
       blockNumber: 18456786,
       gasUsed: 21000,
@@ -298,14 +350,14 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       id: '5',
       type: 'LISTING' as const,
       status: 'Terminé' as const,
-      item: 'Cyber Punk Elite #567',
-      collection: 'Cyber Punks Elite',
-      price: 198.40,
-      priceUSD: 198.40 * 1.2,
-      from: 'cyberpunk',
+      item: 'Ultra Power Core #0003',
+      collection: 'Ultra Power Core',
+      price: 189.30,
+      priceUSD: 189.30 * 1.2,
+      from: 'powerlabs',
       date: new Date(Date.now() - 15 * 60 * 1000).toLocaleDateString('fr-FR'),
       time: '15 min',
-      image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=50&h=50&fit=crop',
+      image: '/collections/ultra-power.png',
       hash: '0x5e6f7890abcdef1234567890abcdef1234567890',
       blockNumber: 18456785,
       gasUsed: 17800,
@@ -364,10 +416,13 @@ const StatisticsPage = ({ onNavigate }: StatisticsPageProps) => {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#7A52D1]/30 via-blue-600/20 to-[#7A52D1]/30"></div>
-          <div className="absolute inset-0 opacity-20">
-            <div className="w-full h-full bg-gradient-to-br from-[#7A52D1]/10 via-transparent to-blue-600/10 animate-pulse"></div>
-          </div>
+          <img 
+            src="/collections/cypherpunk.jpg" 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-15 scale-110 blur-sm"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-[#7A52D1]/50 to-black/85"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50"></div>
         </div>
         
         <div className="relative container mx-auto px-6 py-16">
